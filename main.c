@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:15:08 by abchikhi          #+#    #+#             */
-/*   Updated: 2023/12/24 14:01:07 by abchikhi         ###   ########.fr       */
+/*   Updated: 2023/12/24 20:56:14 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ int main(int ag, char **av)
 		return (1);
 	}
 	
-	t_vector vector;
-	vector.x = 100;
-	vector.y = 242;
-	vector.z = 16;
-	x_axis_line(&img, &vector, 0xFFFFFF);
-
+	t_vector x_vector;
+	x_vector.y = HEIGHT / 2;
+	x_vector.z = 20;
+	x_vector.x = (WIDTH / 2) - (x_vector.z / 2);
+	//draw x axis
+	draw_line(&img, &x_vector, 0xFFFFFF, DEFAULT_ANGLE);
 
 	mlx_put_image_to_window(
 							display.mlx,

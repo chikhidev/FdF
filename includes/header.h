@@ -42,6 +42,6 @@ void	put_the_pixel(t_data *img, int x, int y, int color);
 int		get_matrix(t_hooks *hooks, char *file, t_grid *grid);
 
 /*drawing*/
-void	x_axis_line(t_data *img, t_vector *vector, int color);
+void	draw_line(t_data *img, t_vector *vector, int color, int angle);
 
 #endif

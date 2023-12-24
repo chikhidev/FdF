@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:16:05 by abchikhi          #+#    #+#             */
-/*   Updated: 2023/12/24 14:13:04 by abchikhi         ###   ########.fr       */
+/*   Updated: 2023/12/24 20:42:28 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,32 @@ void	put_the_pixel(t_data *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	push_angle(t_vector *vector, int angle)
-{
-	vector->x = vector->x * cos(angle) - vector->y * sin(angle);
-	vector->y = vector->x * sin(angle) + vector->y * cos(angle);
-}
-
 /*
 * draw a line from the point (x, y) to the point (x, y + z)
 */
-void	x_axis_line(t_data *img, t_vector *vector, int color)
+void	draw_line(t_data *img, t_vector *vector, int color, int angle)
 {
-	while (vector->x < WIDTH)
+	int		i;
+	int		j;
+	int		k;
+	int		x;
+	int		y;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	x = vector->x;
+	y = vector->y;
+	while (i < vector->z)
 	{
-		put_the_pixel(img, vector->x, vector->y, color);
-		push_angle(vector, 40);
-		vector->x++;
+		while (j < angle)
+		{
+			put_the_pixel(img, x, y, color);
+			x++;
+			j++;
+		}
+		j = 0;
+		i++;
+		y++;
 	}
 }

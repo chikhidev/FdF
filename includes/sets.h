@@ -3,6 +3,7 @@
 
 # define HEIGHT 1000
 # define WIDTH 1500
+# define DEFAULT_ANGLE 35
 # define WINDOW_NAME "FdF"
 
 typedef struct x_axis
