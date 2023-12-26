@@ -4,20 +4,11 @@
 # define HEIGHT 1000
 # define WIDTH 1500
 # define DEFAULT_ANGLE 35
+# define AXIS_LENGTH 300
 # define WINDOW_NAME "FdF"
 
-typedef struct x_axis
-{
-    int	x;
-    int	y;
-    int	z;
-}	t_x_axis;
-
-typedef struct y_axis
-{
-    int	x;
-    int	y;
-    int	z;
-}	t_y_axis;
+# define RED "\033[0;31m"
+# define GREEN "\033[0;32m"
+# define RESET "\033[0m"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 09:58:54 by abchikhi          #+#    #+#             */
-/*   Updated: 2023/12/24 11:27:20 by abchikhi         ###   ########.fr       */
+/*   Updated: 2023/12/25 08:29:54 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	read_fdf(int fd, t_hooks *hooks, t_grid *grid)
 	int		line_idx;
 
 	hooks->matrix = NULL;
-	line = get_next_line(fd);
+	line = ft_strtrim(get_next_line(fd), "\n");
 	line_idx = 0;
 	while (line)
 	{

@@ -9,7 +9,7 @@
 #include <fcntl.h>
 #include <math.h>
 #include "sets.h"
-#include "vector.h"
+#include "geo.h"
 
 typedef struct s_data {
 	void	*img;
@@ -41,7 +41,18 @@ typedef struct s_hooks
 void	put_the_pixel(t_data *img, int x, int y, int color);
 int		get_matrix(t_hooks *hooks, char *file, t_grid *grid);
 
-/*drawing*/
-void	draw_line(t_data *img, t_vector *vector, int color, int angle);
+/*points list*/
+t_point		*new_point(int x, int y, int z);
+void		add_point(t_point **point, t_point *new);
+void		clean_points(t_point **point);
+void		mark_points(t_point **point, t_data *img, int color);
+t_point		*generate_random_points(int n);
+
+/*draw*/
+void		generate_map(t_hooks *hooks, t_data *img);
+void		draw_line(t_data *img, t_point *start, t_point *end);
+
+void    	cartesian(t_data *img, int x, int y, int color);
+void    	draw_cartesian_axis(t_data *img);
 
 #endif

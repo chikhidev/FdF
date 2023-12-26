@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:15:08 by abchikhi          #+#    #+#             */
-/*   Updated: 2023/12/24 20:56:14 by abchikhi         ###   ########.fr       */
+/*   Updated: 2023/12/25 16:02:45 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,22 @@ int main(int ag, char **av)
 		write(2, "Error\n", 6);
 		return (1);
 	}
+
+	draw_cartesian_axis(&img);
+	// generate_map(&hooks, &img);
+	// t_point p1;
+	// t_point p2;
 	
-	t_vector x_vector;
-	x_vector.y = HEIGHT / 2;
-	x_vector.z = 20;
-	x_vector.x = (WIDTH / 2) - (x_vector.z / 2);
-	//draw x axis
-	draw_line(&img, &x_vector, 0xFFFFFF, DEFAULT_ANGLE);
+	// p1.x = 5;
+	// p1.y = 2;
+	// p1.z = 90;
+
+	// p2.x = 542;
+	// p2.y = 845;
+	// p2.z = 0;
+	// draw_line(&img, &p1, &p2);
+	// put_the_pixel(&img, p2.x, p2.y, 0xFFFF00);
+	// put_the_pixel(&img, p1.x, p1.y, 0xFFFF00);
 
 	mlx_put_image_to_window(
 							display.mlx,
