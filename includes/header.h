@@ -3,7 +3,7 @@
 
 #include "../get_next_line/get_next_line.h"
 #include "../libft/libft.h"
-#include <mlx.h>
+#include "../minilibx-linux/mlx.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -31,12 +31,33 @@ typedef struct s_grid
 	int	height_grid;
 }	t_grid;
 
+typedef struct s_cartis
+{
+	int	a;
+	int	b;
+	int	c;
+	int	d;
+	int	e;
+	int	f;
+}	t_cartis;
+
 typedef struct s_hooks
 {
 	int			*error;
 	int			***matrix;
 	t_grid		grid;
+	t_cartis	*base_cartis;
 }	t_hooks;
+
+enum {
+	ON_KEYDOWN = 2,
+	ON_KEYUP = 3,
+	ON_MOUSEDOWN = 4,
+	ON_MOUSEUP = 5,
+	ON_MOUSEMOVE = 6,
+	ON_EXPOSE = 12,
+	ON_DESTROY = 17
+};
 
 void	put_the_pixel(t_data *img, int x, int y, int color);
 int		get_matrix(t_hooks *hooks, char *file, t_grid *grid);
@@ -45,14 +66,13 @@ int		get_matrix(t_hooks *hooks, char *file, t_grid *grid);
 t_point		*new_point(int x, int y, int z);
 void		add_point(t_point **point, t_point *new);
 void		clean_points(t_point **point);
-void		mark_points(t_point **point, t_data *img, int color);
-t_point		*generate_random_points(int n);
+void    	mark_points(t_point **point, t_data *img, t_hooks *hooks, int color);
 
 /*draw*/
-void		generate_map(t_hooks *hooks, t_data *img);
-void		draw_line(t_data *img, t_point *start, t_point *end);
+void		draw_line(t_data *img, t_hooks *hooks, t_point *start, t_point *end, int color);
 
-void    	cartesian(t_data *img, int x, int y, int color);
-void    	draw_cartesian_axis(t_data *img);
+void		cartesian(t_data *img, t_hooks *hooks, int x, int y, int z, int color);
+void    	draw_cartesian(t_data *img, t_hooks *hooks);
+
 
 #endif

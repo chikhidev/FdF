@@ -25,37 +25,25 @@ void	put_the_pixel(t_data *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	draw_line(t_data *img, t_point *start, t_point *end)
+void draw_line(t_data *img, t_hooks *hooks, t_point *start, t_point *end, int color)
 {
-	int	dx = end->x - start->x;
-	int	dy = end->y - start->y;
-	int	dz = end->z - start->z;
-	int steps = (abs(dx) > abs(dy) ? abs(dx) : abs(dy));
-	steps = (abs(dz) > abs(steps) ? abs(dz) : steps);
+	int	x;
+	int	y;
+	int	z;
 
-	float	x_increment = dx / (float)steps;
-	float	y_increment = dy / (float)steps;
-	float	z_increment = dz / (float)steps;
-	
-	float	x = start->x;
-	float	y = start->y;
-	float	z = start->z;
-
-	int i = 0;
-	while (i <= steps)
+	x = start->x;
+	y = start->y;
+	z = start->z;
+    while (1)
 	{
-		put_the_pixel(img, (int)x, (int)y + (int)z, 0xFFFFFF);
-		// printf("\t<old>\t(%f, %f, %f)\n", x, y, z);
-		x += (x_increment);
-		y += (y_increment);
-		z += (z_increment);
-		// printf("\t<using>\t\t(%f, %f, %f)\n", x_increment, y_increment, z_increment);
-		// printf("\t<updated>\t(%f, %f, %f)\n", x, y, z);
-		i++;
+		if (x == end->x && y == end->y && z == end->z)
+			break ;
+		if (x != end->x)
+			x > end->x ? x-- : x++;
+		if (y != end->y)
+			y > end->y ? y-- : y++;
+		if (z != end->z)
+			z > end->z ? z-- : z++;
+		cartesian(img, hooks, x, y, z, color);
 	}
 }
-
-// void	generate_map(t_hooks *hooks, t_data *img)
-// {
-
-// }

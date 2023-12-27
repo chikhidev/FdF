@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "header.h": "c",
-        "vector.h": "c"
+        "vector.h": "c",
+        "stdio.h": "c",
+        "mlx.h": "c",
+        "get_next_line.h": "c",
+        "libft.h": "c"
     }
 }

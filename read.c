@@ -13,35 +13,35 @@
 #include "./includes/header.h"
 #include "./includes/string_utils.h"
 
-int	read_fdf(int fd, t_hooks *hooks, t_grid *grid)
-{
-	char	*line;
-	char	**single_line_matrice;
-	int		temp_cols;
-	int		line_idx;
+// int	read_fdf(int fd, t_hooks *hooks, t_grid *grid)
+// {
+// 	char	*line;
+// 	char	**single_line_matrice;
+// 	int		temp_cols;
+// 	int		line_idx;
 
-	hooks->matrix = NULL;
-	line = ft_strtrim(get_next_line(fd), "\n");
-	line_idx = 0;
-	while (line)
-	{
-		single_line_matrice = ft_split(line, ' ');
-		temp_cols = cols_count(single_line_matrice);
-		printf("line=> %s$\n", line);
-		if (temp_cols != grid->width_grid && line_idx != 0)
-			return (0);
-		grid->width_grid = temp_cols;
+// 	hooks->matrix = NULL;
+// 	line = ft_strtrim(get_next_line(fd), "\n");
+// 	line_idx = 0;
+// 	while (line)
+// 	{
+// 		single_line_matrice = ft_split(line, ' ');
+// 		temp_cols = cols_count(single_line_matrice);
+// 		printf("line=> %s$\n", line);
+// 		if (temp_cols != grid->width_grid && line_idx != 0)
+// 			return (0);
+// 		grid->width_grid = temp_cols;
 
-		printf("len of each line is: %d\n", grid->width_grid);
-		printf("line is:\n");
-		for (int i = 0; single_line_matrice[i]; i++)
-			printf("\t%s[%d]\n", single_line_matrice[i], i);
+// 		printf("len of each line is: %d\n", grid->width_grid);
+// 		printf("line is:\n");
+// 		for (int i = 0; single_line_matrice[i]; i++)
+// 			printf("\t%s[%d]\n", single_line_matrice[i], i);
 
-		line = ft_strtrim(get_next_line(fd), "\n");
-		line_idx++;
-	}
-	return (1);
-}
+// 		line = ft_strtrim(get_next_line(fd), "\n");
+// 		line_idx++;
+// 	}
+// 	return (1);
+// }
 
 int get_matrix(t_hooks *hooks, char *file, t_grid *grid)
 {

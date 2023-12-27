@@ -1,43 +1,40 @@
 #include "./includes/header.h"
 
-void    cartesian(t_data *img, int x, int y, int color)
+void    cartesian(t_data *img, t_hooks *hooks, int x, int y, int z, int color)
 {
-    x = WIDTH / 2 + x - (AXIS_LENGTH / 3);
-    y = HEIGHT / 2 + y - (AXIS_LENGTH / 3);
-    put_the_pixel(img, x, y, color);
+    int real_x, real_y;
+
+    real_x = (hooks->base_cartis->a * x) +
+                (hooks->base_cartis->c * y) +
+                (hooks->base_cartis->e * z) +
+                X_OFFSET;
+    real_y = (hooks->base_cartis->b * x) +
+                (hooks->base_cartis->d * y) +
+                (hooks->base_cartis->f * z) +
+                Y_OFFSET;
+    // printf("[DEBUG]: a: %d b: %d c: %d d: %d e: %d f: %d\nreal x: %d, real y: %d\n", 
+    //         hooks->base_cartis->a,
+    //         hooks->base_cartis->b,
+    //         hooks->base_cartis->c,
+    //         hooks->base_cartis->d,
+    //         hooks->base_cartis->e,
+    //         hooks->base_cartis->f,
+    //         real_x, real_y
+    // );
+    put_the_pixel(img, real_x, real_y, color);
 }
 
-void    draw_in_x(t_data *img, int x, int y, int color)
-{
-    cartesian(img, x, y, color);
-}
-
-void draw_cartesian_axis(t_data *img)
+void    draw_cartesian(t_data *img, t_hooks *hooks)
 {
     int i;
 
     i = 0;
-    while (i < AXIS_LENGTH)
-    {
-        cartesian(img, i, 0, 0xFF0000);
-        i++;
-    }
-
-    i = 0;
-    while (i < AXIS_LENGTH)
-    {
-        cartesian(img, 0, i, 0x00FF00);
-        i++;
-    }
-
-    i = 0;
-    double angle = 90 * M_PI / 180;
-    printf(GREEN "angle: %f\n", angle);
-    while (i < AXIS_LENGTH)
-    {
-        int x = i * cos(angle);
-        int y = i * sin(angle);
-        cartesian(img, x, y, 0x0000FF);
-        i++;
-    }
+	while (i < (WIDTH / 2))
+		cartesian(img, hooks, i++, 0, 0, BLUE_COLOR);
+	i = 0;
+	while (i < (WIDTH / 2))
+		cartesian(img, hooks, 0, i++, 0, GREEN_COLOR);
+	i = 0;
+	while (i < (HEIGHT / 2))
+		cartesian(img, hooks, 0, 0, i++, RED_COLOR);
 }
