@@ -27,18 +27,6 @@ void    add_point(t_point **point, t_point *new)
     tmp->next = new;
 }
 
-void    clean_points(t_point **point)
-{
-    t_point	*tmp;
-
-    while (*point)
-    {
-        tmp = *point;
-        *point = (*point)->next;
-        free(tmp);
-    }
-}
-
 int shouldbe_linked(t_point *p1, t_point *p2)
 {
     return (
@@ -65,10 +53,10 @@ void    link_points(t_point **point, t_hooks *hooks, t_data *img, int color)
                 shouldbe_linked(tmp, looking_for) &&
                 looking_for != tmp)
             {
-                printf("[DEBUG]: link [%d, %d, %d] to [%d, %d, %d]\n", 
-                    tmp->x, tmp->y, tmp->z,
-                    looking_for->x, looking_for->y, looking_for->z 
-                );
+                // printf("[DEBUG]: link [%d, %d, %d] to [%d, %d, %d]\n", 
+                //     tmp->x, tmp->y, tmp->z,
+                //     looking_for->x, looking_for->y, looking_for->z 
+                // );
                 draw_line(img, hooks, tmp, looking_for, color);
             }
             looking_for = looking_for->next;
@@ -88,4 +76,18 @@ void    mark_points(t_point **point, t_data *img, t_hooks *hooks, int color)
         tmp = tmp->next;
     }
     link_points(point, hooks, img, color);
+}
+
+t_point *copy_point_list(t_point *source)
+{
+    t_point *copy = NULL;
+    t_point *current = source;
+
+    while (current)
+    {
+        add_point(&copy, new_point(current->x, current->y, current->z));
+        current = current->next;
+    }
+
+    return copy;
 }

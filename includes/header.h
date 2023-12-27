@@ -65,7 +65,7 @@ int		get_matrix(t_hooks *hooks, char *file, t_grid *grid);
 /*points list*/
 t_point		*new_point(int x, int y, int z);
 void		add_point(t_point **point, t_point *new);
-void		clean_points(t_point **point);
+t_point 	*copy_point_list(t_point *source);
 void    	mark_points(t_point **point, t_data *img, t_hooks *hooks, int color);
 
 /*draw*/
