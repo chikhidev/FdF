@@ -11,7 +11,9 @@ SRC = 	draw.c \
 		main.c \
 		string.c \
 		geo.c \
-		cartesian.c
+		cartesian.c \
+		read.c \
+		ft_realloc.c
 OBJ = $(SRC:.c=.o)
 GNL = get_next_line.o
 MLX = libmlx.a
@@ -22,7 +24,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT) $(GNL) $(MLX)
 	@echo "$(GREEN)Compiling and linking $(NAME) 🤓☁️$(RESET)"
-	@cc $(OBJ) $(GNL) $(LIBFT) $(MLX) -o $(NAME) $(LDFLAGS)
+	@cc $(OBJ) $(GNL) $(LIBFT) $(MLX) -o $(NAME) $(LDFLAGS) -fsanitize=address
 	@echo "$(GREEN)Done! -----------------------------------------$(RESET)"
 
 %.o: %.c

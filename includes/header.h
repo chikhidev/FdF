@@ -31,22 +31,13 @@ typedef struct s_grid
 	int	height_grid;
 }	t_grid;
 
-typedef struct s_cartis
-{
-	int	a;
-	int	b;
-	int	c;
-	int	d;
-	int	e;
-	int	f;
-}	t_cartis;
-
 typedef struct s_hooks
 {
 	int			*error;
-	int			***matrix;
+	char		***matrix;
+	t_point		*space_points;
 	t_grid		grid;
-	t_cartis	*base_cartis;
+	double		base_cartis[6];
 }	t_hooks;
 
 enum {
@@ -59,8 +50,12 @@ enum {
 	ON_DESTROY = 17
 };
 
+void    *ft_realloc(void *ptr, size_t old_size, size_t size);
+void    ft_free(void    **ptr);
+
 void	put_the_pixel(t_data *img, int x, int y, int color);
-int		get_matrix(t_hooks *hooks, char *file, t_grid *grid);
+int 	get_matrix(t_hooks *hooks, char *file, t_grid *grid);
+void    free_matrix(t_hooks *hooks);
 
 /*points list*/
 t_point		*new_point(int x, int y, int z);
@@ -73,6 +68,5 @@ void		draw_line(t_data *img, t_hooks *hooks, t_point *start, t_point *end, int c
 
 void		cartesian(t_data *img, t_hooks *hooks, int x, int y, int z, int color);
 void    	draw_cartesian(t_data *img, t_hooks *hooks);
-
 
 #endif

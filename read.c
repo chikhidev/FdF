@@ -13,35 +13,65 @@
 #include "./includes/header.h"
 #include "./includes/string_utils.h"
 
-// int	read_fdf(int fd, t_hooks *hooks, t_grid *grid)
-// {
-// 	char	*line;
-// 	char	**single_line_matrice;
-// 	int		temp_cols;
-// 	int		line_idx;
+void    free_matrix(t_hooks *hooks)
+{
+    int j;
+    int i;
 
-// 	hooks->matrix = NULL;
-// 	line = ft_strtrim(get_next_line(fd), "\n");
-// 	line_idx = 0;
-// 	while (line)
-// 	{
-// 		single_line_matrice = ft_split(line, ' ');
-// 		temp_cols = cols_count(single_line_matrice);
-// 		printf("line=> %s$\n", line);
-// 		if (temp_cols != grid->width_grid && line_idx != 0)
-// 			return (0);
-// 		grid->width_grid = temp_cols;
+    i = hooks->grid.height_grid - 1;
+    while (i >= 0)
+    {
+        j = hooks->grid.width_grid - 1;
+        while (j >= 0)
+        {
+            printf("%p\n", &hooks->matrix[i][j]);
+            ft_free((void **)&hooks->matrix[i][j]);
+            j--;
+        }
+        ft_free((void **)hooks->matrix[i]);
+        i--;
+    }
+    ft_free((void **)hooks->matrix);
+}
+ 
+int	read_fdf(int fd, t_hooks *hooks, t_grid *grid)
+{
+	char	*line;
+	char	**single_line_matrice;
+	int		temp_cols;
+	int		line_idx;
 
-// 		printf("len of each line is: %d\n", grid->width_grid);
-// 		printf("line is:\n");
-// 		for (int i = 0; single_line_matrice[i]; i++)
-// 			printf("\t%s[%d]\n", single_line_matrice[i], i);
-
-// 		line = ft_strtrim(get_next_line(fd), "\n");
-// 		line_idx++;
-// 	}
-// 	return (1);
-// }
+	hooks->matrix = NULL;
+	line = ft_strtrim(get_next_line(fd), "\n");
+	line_idx = 0;
+	while (line)
+	{
+		single_line_matrice = ft_split(line, ' ');
+		temp_cols = cols_count(single_line_matrice);
+		if (temp_cols != grid->width_grid && line_idx != 0)
+        {
+            perror("Map grid error !");
+            free_matrix(hooks);
+            ft_free((void**)&line);
+			return (0);
+        }
+        grid->width_grid = temp_cols;
+        grid->height_grid++;
+        hooks->matrix = ft_realloc(hooks->matrix,
+                line_idx * sizeof(char **), (line_idx + 1) * sizeof(char **));
+        if (!hooks->matrix)
+        {
+            perror("Error!");
+            return (0);
+        }
+        hooks->matrix[line_idx] = single_line_matrice;
+		line_idx++;
+        ft_free((void**)&line);
+        line = ft_strtrim(get_next_line(fd), "\n");
+	}
+    ft_free((void**)&line);
+	return (1);
+}
 
 int get_matrix(t_hooks *hooks, char *file, t_grid *grid)
 {
@@ -49,9 +79,30 @@ int get_matrix(t_hooks *hooks, char *file, t_grid *grid)
 
     fd = open(file, O_RDONLY);
     if (fd == -1)
+    {
+        perror("error!");
         return (0);
+    }
 	grid->width_grid = 0;
+    grid->height_grid = 0;
     if (read_fdf(fd, hooks, grid) == 0)
         return (0);
+    printf("matrix [%d, %d]\n", grid->width_grid, grid->height_grid);
+    // for(int i = 0; i < grid->height_grid; i++)
+    // {
+    //     for (int j = 0; j < grid->width_grid; j++)
+    //         printf("<point> %d\n",
+    //             *hooks->matrix[i]
+    //         );
+    // }
+    // for(int i = 0; i < grid->height_grid; i++)
+    // {
+    //     for (int j = 0; j < grid->width_grid; j++)
+    //         printf("<point> [%d, %d, %d]\n",
+    //             i + ( WIDTH / grid->width_grid),
+    //             j + ( WIDTH / grid->height_grid),
+    //             ft_atoi((const char*)hooks->matrix[i][j])
+    //         );
+    // }
     return (1);
 }

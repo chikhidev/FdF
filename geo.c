@@ -27,7 +27,7 @@ void    add_point(t_point **point, t_point *new)
     tmp->next = new;
 }
 
-int shouldbe_linked(t_point *p1, t_point *p2)
+int     shouldbe_linked(t_point *p1, t_point *p2)
 {
     return (
         (p1->x == p2->x && p1->y == p2->y) ||
