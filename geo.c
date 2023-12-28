@@ -27,13 +27,24 @@ void    add_point(t_point **point, t_point *new)
     tmp->next = new;
 }
 
-int     shouldbe_linked(t_point *p1, t_point *p2)
+int     shouldbe_linked(t_point *p1, t_point *p2, t_hooks *hooks)
 {
+    int unit;
+
+    unit = WIDTH / hooks->grid.width_grid / 3;
     return (
-        (p1->x == p2->x && p1->y == p2->y) ||
+        ((p1->x == p2->x && p1->y == p2->y) ||
         (p1->y == p2->y && p1->z == p2->z) ||
         (p1->x == p2->x && p1->z == p2->z) ||
-        (p1->x == p2->x && p1->y == p2->y && p1->z == p2->z)
+        (p1->x == p2->x && p1->y == p2->y && p1->z == p2->z))&&
+        (
+            (p1->x / unit == (p2->x / unit) - 1) ||
+            (p1->x / unit == (p2->x / unit) + 1) ||
+            (p1->y / unit == (p2->y / unit) - 1) ||
+            (p1->y / unit == (p2->y / unit) + 1) ||
+            (p1->z / unit == (p2->z / unit) - 1) ||
+            (p1->z / unit == (p2->z / unit) + 1)
+        )
     );
 }
 
@@ -45,19 +56,17 @@ void    link_points(t_point **point, t_hooks *hooks, t_data *img, int color)
     tmp = *point;
     while (tmp->next)
     {
-        printf("<Point> [%d, %d, %d]\n", tmp->x, tmp->y, tmp->z);
         looking_for = *point;
         while (looking_for)
         {
-            if (
-                shouldbe_linked(tmp, looking_for) &&
+            if (shouldbe_linked(tmp, looking_for, hooks) &&
                 looking_for != tmp)
             {
-                // printf("[DEBUG]: link [%d, %d, %d] to [%d, %d, %d]\n", 
-                //     tmp->x, tmp->y, tmp->z,
-                //     looking_for->x, looking_for->y, looking_for->z 
-                // );
                 draw_line(img, hooks, tmp, looking_for, color);
+                printf("point[%d, %d, %d] -> point[%d, %d, %d]\n",
+                    tmp->x, tmp->y, tmp->z,
+                    looking_for->x, looking_for->y, looking_for->z
+                );
             }
             looking_for = looking_for->next;
         }
@@ -65,18 +74,52 @@ void    link_points(t_point **point, t_hooks *hooks, t_data *img, int color)
     }
 }
 
-void    mark_points(t_point **point, t_data *img, t_hooks *hooks, int color)
+void    mark_points(t_point **point, t_data *img, t_hooks *hooks)
 {
     t_point	*tmp;
+    int     color;
 
     tmp = *point;
     while (tmp)
     {
+        if (tmp->z > 0)
+            color = HIGHT_LEVEL_COLOR;
+        else if (tmp->z < 0)
+            color = LOW_LEVEL_COLOR;
+        else
+            color = WHITE_COLOR;
         cartesian(img, hooks, tmp->x, tmp->y, tmp->z, color);
+        // printf("<point> [%d, %d, %d], color: %x\n", 
+        //     tmp->x, tmp->y, tmp->z, color
+        // );
         tmp = tmp->next;
     }
     link_points(point, hooks, img, color);
 }
+
+// void    mark_points(t_point **point, t_data *img, t_hooks *hooks, int color)
+// {
+//     t_point	*tmp;
+//     int     _color_;
+
+//     tmp = *point;
+//     while (tmp)
+//     {
+//         if (tmp->z > 0)
+//             _color_ = HIGHT_LEVEL_COLOR;
+//         else if (tmp->z < 0)
+//             _color_ = LOW_LEVEL_COLOR;
+//         else
+//             _color_ = color;
+//         cartesian(img, hooks, tmp->x, tmp->y, tmp->z, _color_);
+//         printf("<point> [%d, %d, %d], color: %x\n", 
+//             tmp->x, tmp->y, tmp->z, color
+//         );
+//         tmp = tmp->next;
+//     }
+//     link_points(point, hooks, img, color);
+// }
+
 
 t_point *copy_point_list(t_point *source)
 {

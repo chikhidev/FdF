@@ -25,10 +25,10 @@ void init_view(t_display *display, t_hooks *hooks, t_data *img)
 	/*(1,0,0) → (a,b) (0,1,0) → (c,d) (0,0,1) → (e,f)*/
 	hooks->base_cartis[0] = 1;	/*a*/
 	hooks->base_cartis[1] = 0;	/*b*/
-	hooks->base_cartis[2] = -1;	/*c*/
-	hooks->base_cartis[3] = 1;	/*d*/
+	hooks->base_cartis[2] = -.5;/*c*/
+	hooks->base_cartis[3] = .3;	/*d*/
 	hooks->base_cartis[4] = 0;	/*e*/
-	hooks->base_cartis[5] = -1;	/*f*/
+	hooks->base_cartis[5] = -0.1;	/*f*/
 }
 
 int main(int ag, char **av)
@@ -42,13 +42,15 @@ int main(int ag, char **av)
 		write(2, "Please use syntax:\n./fdf file.fdf\n", 35);
 		return (1);
 	}
-
-	init_view(&display, &hooks, &img);
-	if (!get_matrix(&hooks, av[1], &hooks.grid))
+	if (!load_map(&hooks, av[1], &hooks.grid))
+	{
+		write(2, "Map not loaded------------------------------\n", 46);
 		return (1);
-
+	}
+	init_view(&display, &hooks, &img);
 	draw_cartesian(&img, &hooks);
 	
+	mark_points(&hooks.space_points, &img, &hooks);
 	/*left rotation x axis*/
 	// hooks.base_cartis[2] = .5;
 	

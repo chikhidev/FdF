@@ -24,7 +24,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT) $(GNL) $(MLX)
 	@echo "$(GREEN)Compiling and linking $(NAME) 🤓☁️$(RESET)"
-	@cc $(OBJ) $(GNL) $(LIBFT) $(MLX) -o $(NAME) $(LDFLAGS) -fsanitize=address
+	@cc $(OBJ) $(GNL) $(LIBFT) $(MLX) -o $(NAME) $(LDFLAGS)
 	@echo "$(GREEN)Done! -----------------------------------------$(RESET)"
 
 %.o: %.c

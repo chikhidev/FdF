@@ -2,7 +2,7 @@
 # define SETS_H
 
 # define HEIGHT 1000
-# define WIDTH 1500
+# define WIDTH 1800
 # define DEFAULT_ANGLE 35
 # define AXIS_LENGTH 300
 # define WINDOW_NAME "FdF"
@@ -18,5 +18,7 @@
 # define BLUE_COLOR 0x33BBFF
 # define GREEN_COLOR 0x3FF86
 # define WHITE_COLOR 0xFFFFFF
+# define HIGHT_LEVEL_COLOR 0xaa9ce3
+# define LOW_LEVEL_COLOR 0x9ce3aa
 
 #endif

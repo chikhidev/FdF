@@ -54,14 +54,14 @@ void    *ft_realloc(void *ptr, size_t old_size, size_t size);
 void    ft_free(void    **ptr);
 
 void	put_the_pixel(t_data *img, int x, int y, int color);
-int 	get_matrix(t_hooks *hooks, char *file, t_grid *grid);
+int 	load_map(t_hooks *hooks, char *file, t_grid *grid);
 void    free_matrix(t_hooks *hooks);
 
 /*points list*/
 t_point		*new_point(int x, int y, int z);
 void		add_point(t_point **point, t_point *new);
 t_point 	*copy_point_list(t_point *source);
-void    	mark_points(t_point **point, t_data *img, t_hooks *hooks, int color);
+void    	mark_points(t_point **point, t_data *img, t_hooks *hooks);
 
 /*draw*/
 void		draw_line(t_data *img, t_hooks *hooks, t_point *start, t_point *end, int color);
