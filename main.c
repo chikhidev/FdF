@@ -59,13 +59,14 @@ int main(int ag, char **av)
 	}
 	if (!load_map(&hooks, av[1], &hooks.grid))
 	{
-		write(2, "Map not loaded------------------------------\n", 46);
+		write(2, "Map not loaded, an error has been appeared while loading the map\n", 66);
 		return (1);
 	}
 	init_view(&display, &hooks, &img);
 	draw_cartesian(&img, &hooks);
 	
 	mark_points(&hooks.space_points, &img, &hooks);
+
 	/*left rotation x axis*/
 	// hooks.base_cartis[2] = .5;
 	
