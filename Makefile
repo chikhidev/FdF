@@ -22,7 +22,7 @@ LIBS = libft.a
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT) $(GNL) $(MLX)
+$(NAME): $(LIBFT) $(GNL) $(MLX) $(OBJ) 
 	@echo "$(GREEN)Compiling and linking $(NAME) 🤓☁️$(RESET)"
 	@cc $(OBJ) $(GNL) $(LIBFT) $(MLX) -o $(NAME) $(LDFLAGS)
 	@echo "$(GREEN)Done! -----------------------------------------$(RESET)"

@@ -31,6 +31,16 @@ void init_view(t_display *display, t_hooks *hooks, t_data *img)
 	hooks->base_cartis[5] = -0.1;	/*f*/
 }
 
+int	valid_extention(char	*name)
+{
+	char	*extention;
+
+	extention = ft_strrchr(name, '.');
+	if (!extention)
+		return (0);
+	return (ft_strncmp(extention, ".fdf", 4) == 0);
+}
+
 int main(int ag, char **av)
 {
 	t_display	display;
@@ -40,6 +50,11 @@ int main(int ag, char **av)
 	if (ag != 2)
 	{
 		write(2, "Please use syntax:\n./fdf file.fdf\n", 35);
+		return (1);
+	}
+	if (!valid_extention(av[1]))
+	{
+		write(2, "Invalid extention found, please use a .fdf file\n", 49);
 		return (1);
 	}
 	if (!load_map(&hooks, av[1], &hooks.grid))
