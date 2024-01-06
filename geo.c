@@ -89,48 +89,20 @@ void    mark_points(t_point **point, t_data *img, t_hooks *hooks)
         else
             color = WHITE_COLOR;
         cartesian(img, hooks, tmp->x, tmp->y, tmp->z, color);
-        // printf("<point> [%d, %d, %d], color: %x\n", 
-        //     tmp->x, tmp->y, tmp->z, color
-        // );
         tmp = tmp->next;
     }
     link_points(point, hooks, img, color);
 }
 
-// void    mark_points(t_point **point, t_data *img, t_hooks *hooks, int color)
-// {
-//     t_point	*tmp;
-//     int     _color_;
-
-//     tmp = *point;
-//     while (tmp)
-//     {
-//         if (tmp->z > 0)
-//             _color_ = HIGHT_LEVEL_COLOR;
-//         else if (tmp->z < 0)
-//             _color_ = LOW_LEVEL_COLOR;
-//         else
-//             _color_ = color;
-//         cartesian(img, hooks, tmp->x, tmp->y, tmp->z, _color_);
-//         printf("<point> [%d, %d, %d], color: %x\n", 
-//             tmp->x, tmp->y, tmp->z, color
-//         );
-//         tmp = tmp->next;
-//     }
-//     link_points(point, hooks, img, color);
-// }
-
-
-t_point *copy_point_list(t_point *source)
+void    clean_points(t_hooks *hooks)
 {
-    t_point *copy = NULL;
-    t_point *current = source;
+    t_point *current = hooks->space_points;
+    t_point *temp;
 
     while (current)
     {
-        add_point(&copy, new_point(current->x, current->y, current->z));
-        current = current->next;
+        temp = current->next;
+        ft_free((void **)&current);
+        current = temp;
     }
-
-    return copy;
 }

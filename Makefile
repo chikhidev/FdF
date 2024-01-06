@@ -13,7 +13,8 @@ SRC = 	draw.c \
 		geo.c \
 		cartesian.c \
 		read.c \
-		ft_realloc.c
+		ft_realloc.c \
+		error.c
 OBJ = $(SRC:.c=.o)
 GNL = get_next_line.o
 MLX = libmlx.a

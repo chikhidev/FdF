@@ -23,10 +23,7 @@ void    free_matrix(t_hooks *hooks)
     {
         j = hooks->grid.width_grid - 1;
         while (j >= 0)
-        {
-            ft_free((void **)&hooks->matrix[i][j]);
-            j--;
-        }
+            ft_free((void **)&hooks->matrix[i][j--]);
         ft_free((void **)hooks->matrix[i]);
         i--;
     }
@@ -49,9 +46,10 @@ int	read_fdf(int fd, t_hooks *hooks, t_grid *grid)
         ft_free((void**)&line);
 
 		temp_cols = cols_count(single_line_matrice);
-		if (temp_cols != grid->width_grid && line_idx != 0)
+		if (temp_cols != grid->width_grid && grid->height_grid != 0)
         {
-            write(2, "Map grid error !\n", 18);
+            print_error(ft_strjoin(ft_strjoin(
+                    "Map grid error at line ", ft_itoa(grid->height_grid + 1)), "\n"),0);
             free_matrix(hooks);
 			return (0);
         }
@@ -60,10 +58,7 @@ int	read_fdf(int fd, t_hooks *hooks, t_grid *grid)
         hooks->matrix = ft_realloc(hooks->matrix,
                 line_idx * sizeof(char **), (line_idx + 1) * sizeof(char **));
         if (!hooks->matrix)
-        {
-            perror("Error!");
-            return (0);
-        }
+            return (print_error("Error found while loading the map\n", 0));
         hooks->matrix[line_idx++] = single_line_matrice;
         line = ft_strtrim(get_next_line(fd), "\n");
 	}
@@ -102,13 +97,13 @@ int load_map(t_hooks *hooks, char *file, t_grid *grid)
     fd = open(file, O_RDONLY);
     if (fd == -1)
     {
-        write(2, "Map file not found\n", 20);
-        return (0);
+        return (print_error("Map file not found\n", 0));
     }
 	grid->width_grid = 0;
     grid->height_grid = 0;
     if (read_fdf(fd, hooks, grid) == 0)
         return (0);
     hooks->space_points = generate_map(hooks);
+    free_matrix(hooks);
     return (1);
 }

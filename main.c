@@ -48,20 +48,11 @@ int main(int ag, char **av)
 	t_hooks		hooks;
 
 	if (ag != 2)
-	{
-		write(2, "Please use syntax:\n./fdf file.fdf\n", 35);
-		return (1);
-	}
+		return (print_error("Syntax error\nUsage: ./fdf FILE/PATH.fdf\n", 1));
 	if (!valid_extention(av[1]))
-	{
-		write(2, "Invalid extention found, please use a .fdf file\n", 49);
-		return (1);
-	}
+		return (print_error("Invalid extention found, please use a .fdf file\n", 1));
 	if (!load_map(&hooks, av[1], &hooks.grid))
-	{
-		write(2, "Map not loaded, an error has been appeared while loading the map\n", 66);
-		return (1);
-	}
+		return (print_error("Map not loaded\n", 1));
 	init_view(&display, &hooks, &img);
 	draw_cartesian(&img, &hooks);
 	
@@ -70,7 +61,6 @@ int main(int ag, char **av)
 	/*left rotation x axis*/
 	// hooks.base_cartis[2] = .5;
 	
-	free_matrix(&hooks);
 	mlx_put_image_to_window(
 							display.mlx,
 							display.win,
