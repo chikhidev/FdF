@@ -73,6 +73,7 @@ t_point *generate_map(t_hooks *hooks)
 
     head_point = NULL;
     i = 0;
+    write(1, "Generating...\n", 15);
     while(i < hooks->grid.height_grid)
     {
         j = 0;
@@ -83,6 +84,11 @@ t_point *generate_map(t_hooks *hooks)
                 j * ( WIDTH / hooks->grid.height_grid / 3),
                 ft_atoi((const char*)hooks->matrix[i][j])
             ));
+            // printf("point (%d, %d, %d) created\n", 
+            //     i * ( WIDTH / hooks->grid.width_grid / 3),
+            //     j * ( WIDTH / hooks->grid.height_grid / 3),
+            //     ft_atoi((const char*)hooks->matrix[i][j])
+            // );
             j++;
         }
         i++;

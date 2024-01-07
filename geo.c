@@ -33,10 +33,10 @@ int     shouldbe_linked(t_point *p1, t_point *p2, t_hooks *hooks)
 
     unit = WIDTH / hooks->grid.width_grid / 3;
     return (
-        ((p1->x == p2->x && p1->y == p2->y) ||
-        (p1->y == p2->y && p1->z == p2->z) ||
+        ((p1->x == p2->x) ||
+        (p1->y == p2->y) ||
         (p1->x == p2->x && p1->z == p2->z) ||
-        (p1->x == p2->x && p1->y == p2->y && p1->z == p2->z))&&
+        (p1->y == p2->y && p1->z == p2->z))&&
         (
             (p1->x / unit == (p2->x / unit) - 1) ||
             (p1->x / unit == (p2->x / unit) + 1) ||
@@ -47,6 +47,30 @@ int     shouldbe_linked(t_point *p1, t_point *p2, t_hooks *hooks)
         )
     );
 }
+
+
+// int     shouldbe_linked(t_point *p1, t_point *p2, t_hooks *hooks)
+// {
+//     int unit;
+
+//     unit = WIDTH / hooks->grid.width_grid / 3;
+//     return (
+//             (
+//                 (p1->y == p2->y ) ||
+//                 (p1->x == p2->x ) || 
+//                 (p1->z == p2->z )
+//             )
+//             &&
+//         (
+//             (p1->x / unit == (p2->x / unit) - 1) ||
+//             (p1->x / unit == (p2->x / unit) + 1) ||
+//             (p1->y / unit == (p2->y / unit) - 1) ||
+//             (p1->y / unit == (p2->y / unit) + 1) ||
+//             (p1->z / unit == (p2->z / unit) - 1) ||
+//             (p1->z / unit == (p2->z / unit) + 1)
+//         )
+//     );
+// }
 
 void    link_points(t_point **point, t_hooks *hooks, t_data *img, int color)
 {
@@ -91,7 +115,7 @@ void    mark_points(t_point **point, t_data *img, t_hooks *hooks)
         cartesian(img, hooks, tmp->x, tmp->y, tmp->z, color);
         tmp = tmp->next;
     }
-    link_points(point, hooks, img, color);
+    // link_points(point, hooks, img, color);
 }
 
 void    clean_points(t_hooks *hooks)
