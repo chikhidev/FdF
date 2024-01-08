@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:15:08 by abchikhi          #+#    #+#             */
-/*   Updated: 2023/12/25 16:02:45 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/08 02:40:27 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void init(t_display *display, t_hooks *hooks, t_data *img)
 							&img->endian);
 	/*(1,0,0) → (a,b) (0,1,0) → (c,d) (0,0,1) → (e,f)*/
 	hooks->base_cartis[0] = 1;		/*a*/
-	hooks->base_cartis[1] = 0;		/*b*/
-	hooks->base_cartis[2] = -.5;	/*c*/
+	hooks->base_cartis[1] = .3;		/*b*/
+	hooks->base_cartis[2] = -1;	/*c*/
 	hooks->base_cartis[3] = .3;		/*d*/
 	hooks->base_cartis[4] = 0;		/*e*/
-	hooks->base_cartis[5] = -0.1;	/*f*/
+	hooks->base_cartis[5] = -0.5;	/*f*/
 }
 
 int	valid_extention(char	*name)
@@ -41,16 +41,23 @@ int	valid_extention(char	*name)
 	return (ft_strncmp(extention, ".fdf", 4) == 0);
 }
 
-void display_loading_screen(t_display *display, t_data *img) {
-    mlx_string_put(display->mlx, display->win, 50, 50, 0xFFFFFF, "Loading...");
-    mlx_put_image_to_window(display->mlx, display->win, img->img, 0, 0);
+int handler2(int x, int y, void *test)
+{
+	(void)test;
+	printf("%d %d\n", x, y);
+	return (0);
 }
 
-void remove_loading_screen(t_display *display, t_data *img) {
-    mlx_clear_window(display->mlx, display->win);
-    mlx_put_image_to_window(display->mlx, display->win, img->img, 0, 0);
+int handler(int button, int x, int y, t_display *display)
+{
+	(void)button;
+	(void)x;
+	(void)y;
+	if (button == 2)
+		mlx_hook(display->win, 6, 0, handler2, NULL);
+	//printf("%d %d\n", x, y);
+	return (0);
 }
-
 int main(int ac, char **av)
 {
 	t_display	display;
@@ -65,20 +72,16 @@ int main(int ac, char **av)
 		return (print_error("Map not loaded\n", 1));
 	init(&display, &hooks, &img);
 	draw_cartesian(&img, &hooks);
-	
-	display_loading_screen(&display, &img);
+	mark_points(&img, &hooks);
 
-	mark_points(&hooks.space_points, &img, &hooks);
-
-	remove_loading_screen(&display, &img);
 	/*left rotation x axis*/
 	// hooks.base_cartis[2] = .5;
-	
 	mlx_put_image_to_window(
 							display.mlx,
 							display.win,
 							img.img,
 							0, 0);
+	mlx_hook(display.win, 4, 0, handler, &display);
 	mlx_loop(display.mlx);
 	return (0);
 }
