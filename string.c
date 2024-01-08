@@ -1,4 +1,5 @@
 #include "./includes/string_utils.h"
+#include "./includes/header.h"
 
 int	cols_count(char **arr)
 {

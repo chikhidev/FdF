@@ -49,6 +49,8 @@ void    	*ft_realloc(void *ptr, size_t old_size, size_t size);
 void    	ft_free(void    **ptr);
 void    	free_matrix(char ***matrix, t_hooks *hooks);
 int			atoi_hexa(char *str);
+int			get_z(char *str);
+int 		get_color(char *str);
 
 /**/
 void		put_the_pixel(t_data *img, int x, int y, int color);
@@ -58,7 +60,7 @@ int 		load_map(t_hooks *hooks, char *file, t_grid *grid);
 void    	mark_points(t_data *img, t_hooks *hooks);
 
 /*draw*/
-void		draw_line(t_data *img, t_hooks *hooks, t_point *start, t_point *end, int color);
+void 		link_point(t_data *img, t_hooks *hooks, int row, int col);
 
 /*cartisian*/
 void		cartesian(t_data *img, t_hooks *hooks, int x, int y, int z, int color);

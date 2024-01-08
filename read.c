@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 09:58:54 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/08 02:40:13 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/08 19:05:00 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	read_fdf(int fd, t_grid *grid)
     if (grid->width_grid < 0 || grid->height_grid < 0)
         return (print_error("Map too large cant deal with it\n", 0));
     if (grid->width_grid * grid->height_grid > 50000)
-        ft_printf("|\n -- Map is large, it may take a while to generate the points\n\n\n");
+        ft_printf("|\n -- Map is large, it may take a while to render!!!\n\n\n");
 	return (1);
 }
 

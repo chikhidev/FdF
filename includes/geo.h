@@ -10,9 +10,4 @@ typedef struct s_point
     struct s_point *next;
 }	t_point;
 
-typedef struct s_map
-{
-    t_point *start_point;
-}   t_map;
-
 #endif

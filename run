@@ -1,2 +1,0 @@
-#!/bin/bash
-make build && clear && ./fdf data.fdf

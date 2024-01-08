@@ -2,47 +2,25 @@
 
 int get_z(char *str)
 {
-    int i;
-
-    i = 0;
-    while (str[i] && str[i] != ',')
-        i++;
     return (ft_atoi(str));
 }
 
 int get_color(char *str)
 {
-    int i;
+    char    *color;
+    int     z;
 
-    i = 0;
-    while (str[i] && str[i] != ',')
-        i++;
-    if (str[i] == ',')
-        return (atoi_hexa(str + i + 1));
-    return (0xFFFFFF);
+    color = ft_strchr(str, ',');
+    if (color)
+        return (atoi_hexa(color + 1));
+    z = get_z(str);
+    if (z < -10)
+        return (LOW_LEVEL_COLOR);
+    else if (z >= -10 && z <= 10)
+        return (WHITE_COLOR);
+    else
+        return (HIGHT_LEVEL_COLOR);
 }
-
-// void    link_points(t_point **point, t_hooks *hooks, t_data *img)
-// {
-//     t_point	*tmp;
-//     t_point *looking_for;
-
-//     tmp = *point;
-//     while (tmp->next)
-//     {
-//         looking_for = *point;
-//         while (looking_for)
-//         {
-//             if (shouldbe_linked(tmp, looking_for, hooks) &&
-//                 looking_for != tmp)
-//             {
-//                 draw_line(img, hooks, tmp, looking_for, 0xFFFFFF);
-//             }
-//             looking_for = looking_for->next;
-//         }
-//         tmp = tmp->next;
-//     }
-// }
 
 // void    generate_line(t_hooks *hooks, int line, t_point **tracking_point)
 // {
@@ -61,8 +39,9 @@ int get_color(char *str)
 
 void    mark_points(t_data *img, t_hooks *hooks)
 {
-    int i;
-    int j;
+    int     i;
+    int     j;
+    t_point point;
 
     i = 0;
     while (i < hooks->grid.height_grid)
@@ -70,11 +49,17 @@ void    mark_points(t_data *img, t_hooks *hooks)
         j = 0;
         while (j < hooks->grid.width_grid)
         {
+            point.x = j * ( WIDTH / hooks->grid.width_grid / 2);
+            point.y = i * ( WIDTH / hooks->grid.height_grid / 2);
+            point.z = get_z(hooks->matrix[i][j]);
+            point.color = get_color(hooks->matrix[i][j]);
             cartesian(img, hooks,
-                j * ( WIDTH / hooks->grid.width_grid / 2),
-                i * ( WIDTH / hooks->grid.height_grid / 2), 
-                get_z(hooks->matrix[i][j]),
-                get_color(hooks->matrix[i][j]));
+                point.x,
+                point.y,
+                point.z,
+                point.color);
+            // if (i < hooks->grid.height_grid - 1 && j < hooks->grid.width_grid - 1)
+            //     link_point(img, hooks, i, j);
             j++;
         }
         i++;
