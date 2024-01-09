@@ -11,7 +11,7 @@ void    cartesian(t_data *img, t_hooks *hooks, int x, int y, int z, int color)
     real_y = (hooks->base_cartis[1] * x) +
                 (hooks->base_cartis[3] * y) +
                 (hooks->base_cartis[5] * z) +
-                (Y_OFFSET - (hooks->grid.height_grid));
+                (Y_OFFSET - (hooks->grid.height_grid / 2));
     put_the_pixel(img, real_x, real_y, color);
 }
 

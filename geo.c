@@ -54,15 +54,12 @@ void    mark_points(t_data *img, t_hooks *hooks)
             point.z = get_z(hooks->matrix[i][j]);
             point.color = get_color(hooks->matrix[i][j]);
             cartesian(img, hooks,
-                point.x,
-                point.y,
-                point.z,
-                point.color);
-            // if (i < hooks->grid.height_grid - 1 && j < hooks->grid.width_grid - 1)
-            //     link_point(img, hooks, i, j);
+                point.x, point.y,
+                point.z, point.color);
+            if (i < hooks->grid.height_grid - 1 && j < hooks->grid.width_grid - 1)
+                link_point(img, hooks, i, j);
             j++;
         }
         i++;
     }
-    // link_points(point, hooks, img);
 }
