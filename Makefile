@@ -6,7 +6,7 @@ RESET = \033[0m
 NAME = fdf
 CFLAGS = -Wall -Wextra -Werror -Imlx 
 LDFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
-# LDFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz libft.a
+# LDFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 SRC = 	draw.c \
 		main.c \
 		string.c \
@@ -14,7 +14,8 @@ SRC = 	draw.c \
 		cartesian.c \
 		read.c \
 		ft_realloc.c \
-		error.c
+		error.c \
+		events.c
 OBJ = $(SRC:.c=.o)
 GNL = get_next_line.o
 LIBFT = libft.a

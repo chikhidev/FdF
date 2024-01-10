@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:16:05 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/09 02:04:23 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/10 04:56:30 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,107 +25,59 @@ void	put_the_pixel(t_data *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void draw_line(t_data *img, t_hooks *hooks, t_point *start, t_point *end, int color) {
-    int x1 = start->x, y1 = start->y, z1 = start->z;
-    int x2 = end->x, y2 = end->y, z2 = end->z;
+//remove ----------------------------------
+void draw_line(t_hooks *hooks, t_point *start, t_point *end, int color) {
+    int k;
+    float x_increment, y_increment, z_increment;
+    float x = start->x, y = start->y, z = start->z;
 
-    int dx = abs(x2 - x1);
-    int dy = abs(y2 - y1);
-    int dz = abs(z2 - z1);
+    int dx = end->x - start->x;
+    int dy = end->y - start->y;
+    int dz = end->z - start->z;
 
-    int sx = (x1 < x2) ? 1 : -1;
-    int sy = (y1 < y2) ? 1 : -1;
-    int sz = (z1 < z2) ? 1 : -1;
+    int max_d = (abs(dx) > abs(dy)) ? ((abs(dx) > abs(dz)) ? abs(dx) : abs(dz)) : ((abs(dy) > abs(dz)) ? abs(dy) : abs(dz));
 
-    int err1, err2;
+    x_increment = (float)dx / max_d;
+    y_increment = (float)dy / max_d;
+    z_increment = (float)dz / max_d;
 
-    if (dx >= dy && dx >= dz) {
-        err1 = dy - (dx >> 1);
-        err2 = dz - (dx >> 1);
+    cartesian(hooks, round(x), round(y), round(z), color);
 
-        while (x1 != x2) {
-            cartesian(img, hooks, x1, y1, z1, color);
+    for (k = 0; k < max_d; ++k) {
+        x += x_increment;
+        y += y_increment;
+        z += z_increment;
 
-            if (err1 >= 0) {
-                y1 += sy;
-                err1 -= dx;
-            }
-
-            if (err2 >= 0) {
-                z1 += sz;
-                err2 -= dx;
-            }
-
-            x1 += sx;
-            err1 += dy;
-            err2 += dz;
-        }
-    } else if (dy >= dx && dy >= dz) {
-        err1 = dx - (dy >> 1);
-        err2 = dz - (dy >> 1);
-
-        while (y1 != y2) {
-            cartesian(img, hooks, x1, y1, z1, color);
-
-            if (err1 >= 0) {
-                x1 += sx;
-                err1 -= dy;
-            }
-
-            if (err2 >= 0) {
-                z1 += sz;
-                err2 -= dy;
-            }
-
-            y1 += sy;
-            err1 += dx;
-            err2 += dz;
-        }
-    } else {
-        err1 = dy - (dz >> 1);
-        err2 = dx - (dz >> 1);
-
-        while (z1 != z2) {
-            cartesian(img, hooks, x1, y1, z1, color);
-
-            if (err1 >= 0) {
-                y1 += sy;
-                err1 -= dz;
-            }
-
-            if (err2 >= 0) {
-                x1 += sx;
-                err2 -= dz;
-            }
-
-            z1 += sz;
-            err1 += dy;
-            err2 += dx;
-        }
+        cartesian(hooks, round(x), round(y), round(z), color);
     }
-
-    cartesian(img, hooks, x2, y2, z2, color); // Ensure the last point is drawn
 }
+//remove ---------------------------------- ^^^^^^^^^^^^^^^^^^^
 
-void link_point(t_data *img, t_hooks *hooks, int row, int col)
+void link_point(t_hooks *hooks, int row, int col)
 {
     t_point start;
     t_point end;
     
-    start.x = col * ( WIDTH / hooks->grid.width_grid / 2);
-    start.y = row * ( WIDTH / hooks->grid.height_grid / 2);
-    start.z = get_z(hooks->matrix[row][col]);
-    end.x = (col + 1) * ( WIDTH / hooks->grid.width_grid / 2);
-    end.y = row * ( WIDTH / hooks->grid.height_grid / 2);
-    end.z = get_z(hooks->matrix[row][col + 1]);
-    draw_line(img, hooks,
-        &start, &end, get_color(hooks->matrix[row][col])
-    );
+    if (((col + 1) < hooks->width_grid) && row < hooks->height_grid)
+    {
+        start.x = col * ( WIDTH / hooks->width_grid / 2);
+        start.y = row * ( WIDTH / hooks->height_grid / 2);
+        start.z = get_z(hooks->matrix[row][col], hooks);
+        end.x = (col + 1) * ( WIDTH / hooks->width_grid / 2);
+        end.y = row * ( WIDTH / hooks->height_grid / 2);
+        end.z = get_z(hooks->matrix[row][col + 1], hooks);
+        draw_line(hooks,
+            &start, &end, get_color(hooks->matrix[row][col], hooks)
+        );
+    }
 
-    end.x = col * ( WIDTH / hooks->grid.width_grid / 2);
-    end.y = (row + 1) * ( WIDTH / hooks->grid.height_grid / 2);
-    end.z = get_z(hooks->matrix[row + 1][col]);
-    draw_line(img, hooks,
-        &start, &end, get_color(hooks->matrix[row][col])
-    );
+    if (((row + 1) < hooks->height_grid) && col < hooks->width_grid)
+    {
+        end.x = col * ( WIDTH / hooks->width_grid / 2);
+        end.y = (row + 1) * ( WIDTH / hooks->height_grid / 2);
+        end.z = get_z(hooks->matrix[row + 1][col], hooks);
+        draw_line(hooks,
+            &start, &end, get_color(hooks->matrix[row][col], hooks)
+        );
+    }
 }

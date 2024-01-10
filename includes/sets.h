@@ -18,7 +18,51 @@
 # define BLUE_COLOR 0x33BBFF
 # define GREEN_COLOR 0x3FF86
 # define WHITE_COLOR 0xFFFFFF
-# define HIGHT_LEVEL_COLOR 0xaa9ce3
+# define HIGHT_LEVEL_COLOR 0xFF7F50
 # define LOW_LEVEL_COLOR 0x9ce3aa
+
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_data;
+
+typedef struct s_hooks
+{
+	void		*mlx;
+	void		*win;
+	t_data		img;
+	int			width_grid;
+	int			height_grid;
+	char		***matrix;
+	char		*tmp_string;
+	char		**arr;
+	int			z_max;
+	int			z_min;
+	double		z_factor;
+	double		base_cartis[6];
+	double		scale;
+	double 		x_angle;
+	double 		y_angle;
+	int 		x_center;
+	int 		y_center;
+	int 		x_offset;
+	int 		y_offset;
+	int			allow_link;
+}	t_hooks;
+
+enum
+{
+	ON_KEYDOWN = 2,
+	ON_KEYUP = 3,
+	ON_MOUSEDOWN = 4,
+	ON_MOUSEUP = 5,
+	ON_MOUSEMOVE = 6,
+	ON_EXPOSE = 12,
+	ON_DESTROY = 17
+};
 
 #endif
