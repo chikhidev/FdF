@@ -6,14 +6,14 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:16:05 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/10 04:56:30 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/11 22:00:11 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/header.h"
 
 /*
-** put the pixel in the image
+** put the pixel in the image 
 */
 void	put_the_pixel(t_data *img, int x, int y, int color)
 {
@@ -25,59 +25,65 @@ void	put_the_pixel(t_data *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-//remove ----------------------------------
-void draw_line(t_hooks *hooks, t_point *start, t_point *end, int color) {
-    int k;
-    float x_increment, y_increment, z_increment;
-    float x = start->x, y = start->y, z = start->z;
+void    draw_line(t_hooks *hooks, int x0, int y0, int x1, int y1)
+{
+    int dx = abs(x1 - x0);
+    int dy = abs(y1 - y0);
+    int sx = x0 < x1 ? 1 : -1;
+    int sy = y0 < y1 ? 1 : -1;
+    int err = (dx > dy ? dx : -dy) / 2;
+    int e2;
 
-    int dx = end->x - start->x;
-    int dy = end->y - start->y;
-    int dz = end->z - start->z;
-
-    int max_d = (abs(dx) > abs(dy)) ? ((abs(dx) > abs(dz)) ? abs(dx) : abs(dz)) : ((abs(dy) > abs(dz)) ? abs(dy) : abs(dz));
-
-    x_increment = (float)dx / max_d;
-    y_increment = (float)dy / max_d;
-    z_increment = (float)dz / max_d;
-
-    cartesian(hooks, round(x), round(y), round(z), color);
-
-    for (k = 0; k < max_d; ++k) {
-        x += x_increment;
-        y += y_increment;
-        z += z_increment;
-
-        cartesian(hooks, round(x), round(y), round(z), color);
+    while (1)
+    {
+        put_the_pixel(&hooks->img, x0, y0, 0x00FFFFFF);
+        if (x0 == x1 && y0 == y1)
+            break ;
+        e2 = err;
+        if (e2 > -dx)
+        {
+            err -= dy;
+            x0 += sx;
+        }
+        if (e2 < dy)
+        {
+            err += dx;
+            y0 += sy;
+        }
     }
 }
-//remove ---------------------------------- ^^^^^^^^^^^^^^^^^^^
 
 void link_point(t_hooks *hooks, int row, int col)
 {
-    t_point start;
+    t_point strt;
     t_point end;
+    
+    strt.x = col * ( WIDTH / hooks->width_grid / 2);
+    strt.y = row * ( WIDTH / hooks->height_grid / 2);
+    strt.z = get_z(hooks->matrix[row][col], hooks);
     
     if (((col + 1) < hooks->width_grid) && row < hooks->height_grid)
     {
-        start.x = col * ( WIDTH / hooks->width_grid / 2);
-        start.y = row * ( WIDTH / hooks->height_grid / 2);
-        start.z = get_z(hooks->matrix[row][col], hooks);
         end.x = (col + 1) * ( WIDTH / hooks->width_grid / 2);
         end.y = row * ( WIDTH / hooks->height_grid / 2);
         end.z = get_z(hooks->matrix[row][col + 1], hooks);
         draw_line(hooks,
-            &start, &end, get_color(hooks->matrix[row][col], hooks)
+            get_real_x(hooks, strt.x, strt.y, strt.z),
+            get_real_y(hooks, strt.x, strt.y, strt.z),
+            get_real_x(hooks, end.x, end.y, end.z),
+            get_real_y(hooks, end.x, end.y, end.z)
         );
     }
-
     if (((row + 1) < hooks->height_grid) && col < hooks->width_grid)
     {
         end.x = col * ( WIDTH / hooks->width_grid / 2);
         end.y = (row + 1) * ( WIDTH / hooks->height_grid / 2);
         end.z = get_z(hooks->matrix[row + 1][col], hooks);
         draw_line(hooks,
-            &start, &end, get_color(hooks->matrix[row][col], hooks)
+            get_real_x(hooks, strt.x, strt.y, strt.z),
+            get_real_y(hooks, strt.x, strt.y, strt.z),
+            get_real_x(hooks, end.x, end.y, end.z),
+            get_real_y(hooks, end.x, end.y, end.z)
         );
     }
 }

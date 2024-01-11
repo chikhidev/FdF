@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:15:08 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/10 10:09:56 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/11 03:31:39 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ void	config_hooks(t_hooks *hooks)
 	*/
 	hooks->base_cartis[0] = 1;		/*a*/
 	hooks->base_cartis[1] = .333;	/*b*/
+	
 	hooks->base_cartis[2] = -1;		/*c*/
 	hooks->base_cartis[3] = .333;	/*d*/
+	
 	hooks->base_cartis[4] = 0;		/*e*/
 	hooks->base_cartis[5] = -1;		/*f*/
 }

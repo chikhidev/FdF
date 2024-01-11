@@ -38,12 +38,11 @@ void    mark_points(t_hooks *hooks)
             point.y = i * (WIDTH / hooks->height_grid / 2);
             point.z = get_z(hooks->matrix[i][j], hooks);
             point.color = get_color(hooks->matrix[i][j], hooks);
-            // printf("color is %d\n", point.color);
             cartesian(hooks,
                 point.x, point.y,
                 point.z, point.color);
-                if (j + 1 < hooks->width_grid && hooks->allow_link)
-                    link_point(hooks, i, j);
+            if (hooks->allow_link)
+                link_point(hooks, i, j);
             j++;
         }
         i++;

@@ -32,8 +32,6 @@ void rotate_x(t_hooks *hooks, double angle)
     hooks->base_cartis[2] = -temp1 * sin(angle) + temp2 * cos(angle);
 }
 
-#include <math.h>
-
 void rotate_y(t_hooks *hooks, double angle)
 {
     if (angle > 360 || angle < -360)
@@ -63,6 +61,8 @@ int render_next_frame(t_hooks *hooks)
 {
     mlx_destroy_image(hooks->mlx, hooks->img.img);
     refresh_image(hooks, &hooks->img);
+    if (hooks->show_cartesian)
+        draw_cartesian(hooks);
     mark_points(hooks);
     mlx_put_image_to_window(
 							hooks->mlx, hooks->win,
@@ -137,7 +137,12 @@ int	key_listener(int keycode, t_hooks *hooks)
         hooks->allow_link = !hooks->allow_link;
         render_next_frame(hooks);
     }
-    printf("keycode is %d\n", keycode);
+    else if (keycode == 8)
+    {
+        hooks->show_cartesian = !hooks->show_cartesian;
+        render_next_frame(hooks);
+    }
+    printf("keycode: %d\n", keycode);
 	return (0);
 }
 

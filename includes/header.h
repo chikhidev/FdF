@@ -40,6 +40,8 @@ void 		link_point(t_hooks *hooks, int row, int col);
 /*cartisian*/
 void		cartesian(t_hooks *hooks, int x, int y, int z, int color);
 void    	draw_cartesian(t_hooks *hooks);
+int         get_real_x(t_hooks *hooks, int x, int y, int z);
+int         get_real_y(t_hooks *hooks, int x, int y, int z);
 
 /*events*/
 int	        key_listener(int keycode, t_hooks *hooks);

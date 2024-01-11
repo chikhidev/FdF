@@ -52,6 +52,7 @@ typedef struct s_hooks
 	int 		x_offset;
 	int 		y_offset;
 	int			allow_link;
+	int			show_cartesian;
 }	t_hooks;
 
 enum

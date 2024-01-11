@@ -72,7 +72,8 @@ void	show_guide(t_hooks *hooks)
 	mlx_string_put(hooks->mlx, hooks->win, 15, 90, 0x00FFFFFF, "Zoom: z/x");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 130, 0x00FFFFFF, "Reset: r");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 170, 0x00FFFFFF, "Dots view: l (on/off)");
-	mlx_string_put(hooks->mlx, hooks->win, 15, 150, 0x00FFFFFF, "Exit: esc");
+	mlx_string_put(hooks->mlx, hooks->win, 15, 150, 0x00FFFFFF, "Show cartesian: c (on/off)");
+	mlx_string_put(hooks->mlx, hooks->win, 15, 190, 0x00FFFFFF, "Exit: esc");
 	// ft_printf(" -- Zoom out: scroll reverse\n");
 	// ft_printf(" -- Move: W A S D\n");
 	// ft_printf(" -- Rotate: drag with mouse\n");
