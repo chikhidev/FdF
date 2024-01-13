@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:16:05 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/11 22:00:11 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/13 00:46:19 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,18 @@ void	put_the_pixel(t_data *img, int x, int y, int color)
 		return ;
 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
+}
+
+void	change_pixel_color(t_data *img, int x, int y, int change)
+{
+	char	*dst;
+	
+	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
+		return ;
+	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+    if ((*(unsigned int*)dst + change) < 0)
+        return ;
+	*(unsigned int*)dst += change;
 }
 
 void    draw_line(t_hooks *hooks, int x0, int y0, int x1, int y1)
@@ -61,6 +73,7 @@ void link_point(t_hooks *hooks, int row, int col)
     strt.x = col * ( WIDTH / hooks->width_grid / 2);
     strt.y = row * ( WIDTH / hooks->height_grid / 2);
     strt.z = get_z(hooks->matrix[row][col], hooks);
+    strt.color = get_color(hooks->matrix[row][col], hooks);
     
     if (((col + 1) < hooks->width_grid) && row < hooks->height_grid)
     {

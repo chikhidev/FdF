@@ -6,20 +6,31 @@ RESET = \033[0m
 NAME = fdf
 CFLAGS = -Wall -Wextra -Werror -Imlx 
 LDFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
-# LDFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
-SRC = 	draw.c \
-		main.c \
-		string.c \
-		geo.c \
-		cartesian.c \
-		read.c \
-		ft_realloc.c \
-		error.c \
-		events.c
+SRC = draw.c \
+      string.c \
+      geo.c \
+      cartesian.c \
+      read.c \
+      ft_realloc.c \
+      error.c \
+	  main.c
+
+BSRC = draw.c \
+      string.c \
+      geo.c \
+      cartesian.c \
+      read.c \
+      ft_realloc.c \
+      error.c \
+	  bmain.c \
+	  events_listener.c \
+	  events/conf.c events/moving.c events/renderer.c events/rotation.c
+
 OBJ = $(SRC:.c=.o)
 GNL = get_next_line.o
 LIBFT = libft.a
 FTPRINTF = libftprintf.a
+BONUS_OBJ = $(BSRC:.c=.o)
 
 all: $(NAME)
 
@@ -28,7 +39,7 @@ $(NAME): $(LIBFT) $(GNL) $(OBJ) $(FTPRINTF)
 	@cc $(OBJ) $(GNL) $(LIBFT) $(FTPRINTF) -o $(NAME) $(LDFLAGS)
 	@echo "$(GREEN)Done! -----------------------------------------$(RESET)"
 
-%.o: %.c
+OBJ: SRC
 	@echo "$(YELLOW)Compiling $< 🛠️$(RESET)"
 	@cc -c $< $(CFLAGS) -o $@
 
@@ -44,15 +55,24 @@ libftprintf.a:
 	@echo "$(YELLOW)Compiling ft_printf 🛠️$(RESET)"
 	@make -C ./ft_printf && mv ./ft_printf/libftprintf.a .
 
+bonus: $(LIBFT) $(GNL) $(BONUS_OBJ) $(FTPRINTF)
+	@echo "$(GREEN)Compiling and linking bonus executable 🤓☁️$(RESET)"
+	@cc $(BONUS_OBJ) $(GNL) $(LIBFT) $(FTPRINTF) -o bonus_$(NAME) $(LDFLAGS)
+	@echo "$(GREEN)Done! -----------------------------------------$(RESET)"
+
+BONUS_OBJ: BSRC
+	@echo "$(YELLOW)Compiling $< 🛠️$(RESET)"
+	@cc -c $< $(CFLAGS) -o $@
+
 clean:
 	@echo "$(RED)Removing objects and executable 🧹$(RESET)"
 	@make -C ./libft clean
-	@rm -f $(OBJ) $(GNL) $(LIBFT) $(FTPRINTF)
+	@rm -f $(OBJ) $(GNL) $(LIBFT) $(FTPRINTF) $(BONUS_OBJ)
 
 fclean: clean 
-	@echo "$(RED)Removing $(NAME) 😢$(RESET)"
-	@rm -f $(NAME)
+	@echo "$(RED)Removing $(NAME) and bonus executable 😢$(RESET)"
+	@rm -f $(NAME) bonus_$(NAME)
 
 build: all clean
-	
+
 re: clean all

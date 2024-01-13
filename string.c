@@ -52,6 +52,8 @@ void	show_guide(t_hooks *hooks)
 {
 	char	*str;
 
+	if (HEIGHT < 230)
+		return ;
 	str = ft_strjoin("Points rendered: ", ft_itoa(
 		hooks->width_grid * hooks->height_grid)
 	);
@@ -68,17 +70,19 @@ void	show_guide(t_hooks *hooks)
 	str = ft_strjoin("Y angle: ", ft_itoa(hooks->y_angle));
 	mlx_string_put(hooks->mlx, hooks->win, 15, 70, 0x00FFFFFF, str);
 	ft_free((void **)&str);
-	// ft_printf(" -- Zoom in: scroll forward\n");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 90, 0x00FFFFFF, "Zoom: z/x");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 130, 0x00FFFFFF, "Reset: r");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 170, 0x00FFFFFF, "Dots view: l (on/off)");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 150, 0x00FFFFFF, "Show cartesian: c (on/off)");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 190, 0x00FFFFFF, "Exit: esc");
-	// ft_printf(" -- Zoom out: scroll reverse\n");
-	// ft_printf(" -- Move: W A S D\n");
-	// ft_printf(" -- Rotate: drag with mouse\n");
-	// ft_printf(" -- Change height: Q E\n");
-	// ft_printf(" -- Change projection: P\n");
-	// ft_printf(" -- Show cartesian: C\n");
-	// ft_printf(" -- Exit: ESC\n");
+}
+
+int	valid_extention(char	*name)
+{
+	char	*extention;
+
+	extention = ft_strrchr(name, '.');
+	if (!extention)
+		return (0);
+	return (ft_strncmp(extention, ".fdf", 4) == 0);
 }

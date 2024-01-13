@@ -8,11 +8,15 @@ int get_z(char *str, t_hooks *hooks)
 int get_color(char *str, t_hooks *hooks)
 {
     char    *color;
+    int     color_value;
     int     z;
 
     color = ft_strchr(str, ',');
     if (color)
-        return (atoi_hexa(color + 1));
+    {
+        color_value = atoi_hexa(color + 1);
+        return (color_value);
+    }
     z = get_z(str, hooks);
     if (z < -10)
         return (LOW_LEVEL_COLOR);

@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   bmain.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:15:08 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/13 02:04:53 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/13 01:59:19 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/header.h"
+#include "events/events.h"
 
 void	exit_free(t_hooks *hooks)
 {
@@ -55,16 +56,6 @@ void refresh_image(t_hooks *hooks, t_data *img)
 	hooks->img = *img;
 }
 
-int	close_win(int keycode, t_hooks *hooks)
-{
-	if (keycode == 53)
-    {
-        ft_printf("Bye\n");
-        exit_free(hooks);
-    }
-	return (0);
-}
-
 int main(int ac, char **av)
 {
 	t_data		img;
@@ -85,7 +76,8 @@ int main(int ac, char **av)
 	mlx_put_image_to_window(
 							hooks.mlx, hooks.win,
 							img.img, 0, 0);
-	mlx_hook(hooks.win, ON_KEYDOWN, 0, close_win, &hooks);
+	mlx_hook(hooks.win, ON_KEYDOWN, 0, event_listener, &hooks);
+	show_guide(&hooks);
 	mlx_loop(hooks.mlx);
 	return (0);
 }
