@@ -9,10 +9,9 @@ int	cols_count(char **arr, t_hooks *hooks)
 	while (arr[i])
 	{
 		//5 8 0 4,0xFF0000
-		ft_printf("processing %s\n", arr[i]);
 		if (!ft_isdigit(arr[i][0]) && arr[i][0] != '-' && arr[i][0] != '+')
 		{
-			ft_printf("Invalid character found '%c' at position %d in line %d\n", 1, arr[i][0], i + 1, hooks->height_grid + 1);
+			ft_printf("Invalid syntax, line %d\n", 1, hooks->height_grid + 1);
 			exit(1);
 		}
 		z_value = ft_atoi(arr[i]);
@@ -30,7 +29,6 @@ int	cols_count(char **arr, t_hooks *hooks)
 		}
 		i++;
 	}
-	ft_printf("len of line %d is %d\n", hooks->height_grid + 1, i);
 	return (i);
 }
 
@@ -66,6 +64,7 @@ void	show_guide(t_hooks *hooks)
 		hooks->width_grid * hooks->height_grid)
 	);
 	mlx_string_put(hooks->mlx, hooks->win, 15, 10, 0x00FFFFFF, str);
+	free(str);
 	str = ft_strjoin("Scale: ", ft_itoa(hooks->scale));
 	mlx_string_put(hooks->mlx, hooks->win, 15, 110, 0x00FFFFFF, str);
 	free(str);

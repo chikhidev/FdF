@@ -10,7 +10,6 @@ void	config_hooks(t_hooks *hooks)
 	hooks->y_angle = 0;
 	hooks->x_angle = 0;
 	hooks->allow_link = 1;
-	hooks->z_factor = 50;
 	/*
 		(1,0,0) → (a,b) (0,1,0) → (c,d) (0,0,1) → (e,f)
 	*/

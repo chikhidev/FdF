@@ -6,13 +6,12 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 09:58:54 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/14 16:11:54 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/14 17:33:21 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/header.h"
 
-//what is wrong in the process_line function? it reads also blank characters?
 int process_line(t_hooks *hooks, int fd) {
     char *line;
     char **single_line_matrice;
@@ -32,9 +31,7 @@ int process_line(t_hooks *hooks, int fd) {
     if (temp_cols != hooks->width_grid && hooks->height_grid != 0)
     {
         ft_printf("Map grid error at line %d\n", hooks->height_grid + 1);
-        ft_printf("line: %s\n", line);
         ft_printf("Expected %d columns, got %d\n", hooks->width_grid, temp_cols);
-        system("leaks fdf");
         exit(1);
     }
     hooks->width_grid = temp_cols;

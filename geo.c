@@ -14,7 +14,7 @@ int get_color(char *str, t_hooks *hooks)
     color = ft_strchr(str, ',');
     if (color)
     {
-        color_value = atoi_hexa(color + 1);
+        color_value = atoi_hexa(color + 3);
         return (color_value);
     }
     z = get_z(str, hooks);
@@ -23,7 +23,7 @@ int get_color(char *str, t_hooks *hooks)
     else if (z >= -10 && z <= 10)
         return (WHITE_COLOR);
     else
-        return (HIGHT_LEVEL_COLOR);
+        return (HIGH_LEVEL_COLOR);
 }
 
 void    mark_points(t_hooks *hooks)

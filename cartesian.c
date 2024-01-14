@@ -18,7 +18,17 @@ int get_real_y(t_hooks *hooks, int x, int y, int z)
     return (hooks->scale * ((hooks->base_cartis[1] * x) +
                 (hooks->base_cartis[3] * y) +
                 (hooks->base_cartis[5] * z) + hooks->y_offset +
-                + Y_OFFSET - (height_offset / 2)));
+                + Y_OFFSET));
+}
+
+void    get_real_point(t_hooks *hooks, t_point *point)
+{
+    t_point real_point;
+
+    real_point.x = get_real_x(hooks, point->x, point->y, point->z);
+    real_point.y = get_real_y(hooks, point->x, point->y, point->z);
+    point->x = real_point.x;
+    point->y = real_point.y;
 }
 
 void    cartesian(t_hooks *hooks, int x, int y, int z, int color)

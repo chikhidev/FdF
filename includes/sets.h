@@ -18,7 +18,7 @@
 # define BLUE_COLOR 0x33BBFF
 # define GREEN_COLOR 0x3FF86
 # define WHITE_COLOR 0xFFFFFF
-# define HIGHT_LEVEL_COLOR 0xFF7F50
+# define HIGH_LEVEL_COLOR 0xFF7F50
 # define LOW_LEVEL_COLOR 0x9ce3aa
 
 typedef struct s_data

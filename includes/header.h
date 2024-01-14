@@ -43,5 +43,7 @@ void		cartesian(t_hooks *hooks, int x, int y, int z, int color);
 void    	draw_cartesian(t_hooks *hooks);
 int         get_real_x(t_hooks *hooks, int x, int y, int z);
 int         get_real_y(t_hooks *hooks, int x, int y, int z);
+void        get_real_point(t_hooks *hooks, t_point *point);
+void        make_background(t_hooks *hooks, int width);
 
 #endif
