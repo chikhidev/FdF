@@ -6,25 +6,27 @@ RESET = \033[0m
 NAME = fdf
 CFLAGS = -Wall -Wextra -Werror -Imlx 
 LDFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
-SRC = draw.c \
-      string.c \
-      geo.c \
-      cartesian.c \
-      read.c \
-      ft_realloc.c \
-      error.c \
-	  main.c
+SRC = 	config.c \
+		draw.c \
+		string.c \
+		geo.c \
+      	cartesian.c \
+      	read.c \
+		free_exit.c \
+      	error.c \
+	  	main.c
 
-BSRC = draw.c \
-      string.c \
-      geo.c \
-      cartesian.c \
-      read.c \
-      ft_realloc.c \
-      error.c \
-	  bmain.c \
-	  events_listener.c \
-	  events/conf.c events/moving.c events/renderer.c events/rotation.c
+BSRC = 	config.c \
+		draw.c \
+		string.c \
+      	geo.c \
+      	cartesian.c \
+      	read.c \
+		free_exit.c \
+      	error.c \
+	  	bmain.c \
+	  	events_listener.c \
+	  	events/conf.c events/moving.c events/renderer.c events/rotation.c
 
 OBJ = $(SRC:.c=.o)
 GNL = get_next_line.o
@@ -55,7 +57,7 @@ libftprintf.a:
 	@echo "$(YELLOW)Compiling ft_printf 🛠️$(RESET)"
 	@make -C ./ft_printf && mv ./ft_printf/libftprintf.a .
 
-bonus: $(LIBFT) $(GNL) $(BONUS_OBJ) $(FTPRINTF)
+bonus: $(LIBFT) $(GNL) $(FTPRINTF) $(BONUS_OBJ)
 	@echo "$(GREEN)Compiling and linking bonus executable 🤓☁️$(RESET)"
 	@cc $(BONUS_OBJ) $(GNL) $(LIBFT) $(FTPRINTF) -o bonus_$(NAME) $(LDFLAGS)
 	@echo "$(GREEN)Done! -----------------------------------------$(RESET)"

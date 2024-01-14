@@ -8,6 +8,13 @@ int	cols_count(char **arr, t_hooks *hooks)
 	i = 0;
 	while (arr[i])
 	{
+		//5 8 0 4,0xFF0000
+		ft_printf("processing %s\n", arr[i]);
+		if (!ft_isdigit(arr[i][0]) && arr[i][0] != '-' && arr[i][0] != '+')
+		{
+			ft_printf("Invalid character found '%c' at position %d in line %d\n", 1, arr[i][0], i + 1, hooks->height_grid + 1);
+			exit(1);
+		}
 		z_value = ft_atoi(arr[i]);
 		if (hooks->height_grid == 0 && i == 0)
 		{
@@ -23,6 +30,7 @@ int	cols_count(char **arr, t_hooks *hooks)
 		}
 		i++;
 	}
+	ft_printf("len of line %d is %d\n", hooks->height_grid + 1, i);
 	return (i);
 }
 
@@ -60,16 +68,16 @@ void	show_guide(t_hooks *hooks)
 	mlx_string_put(hooks->mlx, hooks->win, 15, 10, 0x00FFFFFF, str);
 	str = ft_strjoin("Scale: ", ft_itoa(hooks->scale));
 	mlx_string_put(hooks->mlx, hooks->win, 15, 110, 0x00FFFFFF, str);
-	ft_free((void **)&str);
+	free(str);
 	str = ft_strjoin("Z factor: ", ft_itoa(hooks->z_factor));
 	mlx_string_put(hooks->mlx, hooks->win, 15, 30, 0x00FFFFFF, str);
-	ft_free((void **)&str);
+	free(str);
 	str = ft_strjoin("X angle: ", ft_itoa(hooks->x_angle));
 	mlx_string_put(hooks->mlx, hooks->win, 15, 50, 0x00FFFFFF, str);
-	ft_free((void **)&str);
+	free(str);
 	str = ft_strjoin("Y angle: ", ft_itoa(hooks->y_angle));
 	mlx_string_put(hooks->mlx, hooks->win, 15, 70, 0x00FFFFFF, str);
-	ft_free((void **)&str);
+	free(str);
 	mlx_string_put(hooks->mlx, hooks->win, 15, 90, 0x00FFFFFF, "Zoom: z/x");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 130, 0x00FFFFFF, "Reset: r");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 170, 0x00FFFFFF, "Dots view: l (on/off)");
@@ -83,6 +91,6 @@ int	valid_extention(char	*name)
 
 	extention = ft_strrchr(name, '.');
 	if (!extention)
-		return (0);
+		print_error("No extention found\n", 1);
 	return (ft_strncmp(extention, ".fdf", 4) == 0);
 }

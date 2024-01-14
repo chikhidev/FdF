@@ -6,5 +6,5 @@ int print_error(const char *message, int error_signal)
         return (error_signal);
     write(2, "Error: ", 8);
     write(2, message, ft_strlen(message));
-    return (error_signal);
+    exit(error_signal);
 }

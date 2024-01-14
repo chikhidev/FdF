@@ -6,59 +6,53 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 09:58:54 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/11 21:56:52 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/14 16:11:54 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/header.h"
 
-void    free_matrix(char ***matrix, t_hooks *hooks)
-{
-    int i;
-    int j;
+//what is wrong in the process_line function? it reads also blank characters?
+int process_line(t_hooks *hooks, int fd) {
+    char *line;
+    char **single_line_matrice;
+    int temp_cols;
 
-    i = 0;
-    while (i < hooks->height_grid)
+    hooks->tmp_string = get_next_line(fd);
+    if (!hooks->tmp_string)
+        return 0;
+    line = ft_strtrim(hooks->tmp_string, "\n");
+    free(hooks->tmp_string);
+    single_line_matrice = ft_split(line, ' ');
+    free(line);
+    if (!single_line_matrice)
+        print_error("an error appeared while generating\n", 1);
+    temp_cols = cols_count(single_line_matrice, hooks);
+    free_split(single_line_matrice);
+    if (temp_cols != hooks->width_grid && hooks->height_grid != 0)
     {
-        j = 0;
-        while (j < hooks->width_grid)
-        {
-            ft_free((void **)&matrix[i][j]);
-            j++;
-        }
-        ft_free((void **)matrix[i]);
-        i++;
+        ft_printf("Map grid error at line %d\n", hooks->height_grid + 1);
+        ft_printf("line: %s\n", line);
+        ft_printf("Expected %d columns, got %d\n", hooks->width_grid, temp_cols);
+        system("leaks fdf");
+        exit(1);
     }
-    ft_free((void **)*matrix);
-} 
+    hooks->width_grid = temp_cols;
+    hooks->height_grid++;
+    return 1;
+}
 
-int	read_fdf(int fd, t_hooks *hooks)
-{
-	char	*line;
-	char	**single_line_matrice;
-	int		temp_cols;
-
-	ft_printf("-> Reading the map and validating...\n");
-	line = ft_strtrim(get_next_line(fd), "\n");
-	while (line)
-	{
-		single_line_matrice = ft_split(line, ' ');
-        ft_free((void**)&line);
-		temp_cols = cols_count(single_line_matrice, hooks);
-		if (temp_cols != hooks->width_grid && hooks->height_grid != 0)
-            return (print_error(ft_strjoin(ft_strjoin(
-                    "Map grid error at line ", ft_itoa(hooks->height_grid + 1)), "\n"),0));
-        hooks->width_grid = temp_cols;
-        hooks->height_grid++;
-        line = ft_strtrim(get_next_line(fd), "\n");
-	}
-    if (hooks->width_grid == 0)
-        return (print_error("Map given is empty\n", 0));
-    if (hooks->width_grid < 0 || hooks->height_grid < 0)
-        return (print_error("Map too large cant deal with it\n", 0));
+int read_fdf(t_hooks *hooks, int fd) {
+    ft_printf("-> Reading the map and validating...\n");
+    while (process_line(hooks, fd)) {
+        if (hooks->width_grid == 0)
+            print_error("Bad grid\n", 1);
+        if (hooks->width_grid < 0 || hooks->height_grid < 1)
+            print_error("Map too large, can't deal with it\n", 1);
+    }
     if (hooks->width_grid * hooks->height_grid > 50000)
-        ft_printf("|\n -- Map is large, it may take a while to render!!!\n\n\n");
-	return (1);
+            ft_printf("|\n -- Map is large, it may take a while to render!!!\n\n\n");
+    return 1;
 }
 
 void    generate_map(t_hooks *hooks, int fd)
@@ -68,7 +62,7 @@ void    generate_map(t_hooks *hooks, int fd)
 
     hooks->matrix = malloc(sizeof(char **) * hooks->height_grid);
     if (!hooks->matrix)
-        print_error("matrix not allocated (memory problems)\n", 0);
+        print_error("matrix not allocated (memory problems)\n", 1);
     i = 0;
     ft_printf("Generating %d points...\n", hooks->width_grid * hooks->height_grid);
     line = get_next_line(fd);
@@ -76,17 +70,17 @@ void    generate_map(t_hooks *hooks, int fd)
     {
         hooks->tmp_string = ft_strtrim(line, "\n");
         if (!hooks->tmp_string)
-            print_error("an error appeared while generating\n", 0);
-        ft_free((void **)&line);
+            print_error("an error appeared while generating\n", 1);
+        free(line);
         hooks->arr = ft_split(hooks->tmp_string, ' ');
         if (!hooks->arr)
-            print_error("an error appeared while generating\n", 0);
-        ft_free((void **)&hooks->tmp_string);
+            print_error("an error appeared while generating\n", 1);
+        free(hooks->tmp_string);
         hooks->matrix[i] = hooks->arr;
         line = get_next_line(fd);
         i++;
     }
-    ft_free((void **)&line);
+    free(line);
 }
 
 int load_map(t_hooks *hooks, char *file)
@@ -95,12 +89,10 @@ int load_map(t_hooks *hooks, char *file)
 
     fd = open(file, O_RDONLY);
     if (fd == -1)
-    {
-        return (print_error("Map file not found\n", 0));
-    }
+        print_error("Map file not found\n", 1);
 	hooks->width_grid = 0;
     hooks->height_grid = 0;
-    if (read_fdf(fd, hooks) == 0)
+    if (read_fdf(hooks, fd) == 0)
         return (0);
 	close(fd);
 	fd = open(file, O_RDONLY);

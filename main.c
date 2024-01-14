@@ -6,62 +6,20 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:15:08 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/13 02:04:53 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/14 15:46:26 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/header.h"
 
-void	exit_free(t_hooks *hooks)
-{
-	free_matrix(hooks->matrix, hooks);
-	mlx_destroy_image(hooks->mlx, hooks->img.img);
-	mlx_destroy_window(hooks->mlx, hooks->win);
-	exit(0);
-}
-
-void	config_hooks(t_hooks *hooks)
-{
-	hooks->z_max = 0;
-	hooks->z_min = 0;
-	hooks->scale = .8;
-	hooks->x_offset = 0;
-	hooks->y_offset = 0;
-	hooks->y_angle = 0;
-	hooks->x_angle = 0;
-	hooks->allow_link = 1;
-	/*
-		(1,0,0) → (a,b) (0,1,0) → (c,d) (0,0,1) → (e,f)
-	*/
-	hooks->base_cartis[0] = 1;		/*a*/
-	hooks->base_cartis[1] = .333;	/*b*/
-	
-	hooks->base_cartis[2] = -1;		/*c*/
-	hooks->base_cartis[3] = .333;	/*d*/
-	
-	hooks->base_cartis[4] = 0;		/*e*/
-	hooks->base_cartis[5] = -1;		/*f*/
-}
-
-void refresh_image(t_hooks *hooks, t_data *img)
-{
-	img->img = mlx_new_image(hooks->mlx, WIDTH, HEIGHT);
-	img->addr = mlx_get_data_addr(
-							img->img,
-							&img->bits_per_pixel,
-							&img->line_length,
-							&img->endian
-						);
-	hooks->img = *img;
-}
-
 int	close_win(int keycode, t_hooks *hooks)
 {
 	if (keycode == 53)
-    {
-        ft_printf("Bye\n");
-        exit_free(hooks);
-    }
+	{
+		ft_printf("Bye\n");
+		exit_free(hooks);
+	}
+	ft_printf("key is : %d\n", keycode);
 	return (0);
 }
 
@@ -71,13 +29,11 @@ int main(int ac, char **av)
 	t_hooks		hooks;
 
 	if (ac != 2)
-		return (print_error("Syntax error\nUsage: ./fdf FILE/PATH.fdf\n", 1));
+		print_error("Syntax error\nUsage: ./fdf FILE/PATH.fdf\n", 1);
 	if (!valid_extention(av[1]))
-		return (print_error("Invalid extention found, please use a .fdf file\n", 1));
+		print_error("Invalid extention found, please use a .fdf file\n", 1);
 	config_hooks(&hooks);
-	hooks.z_factor = 30;
-	if (!load_map(&hooks, av[1]))
-		return (print_error("Map not loaded\n", 1));
+	load_map(&hooks, av[1]);
 	hooks.mlx = mlx_init();
 	hooks.win = mlx_new_window(hooks.mlx, WIDTH, HEIGHT, WINDOW_NAME);
 	refresh_image(&hooks, &img);
@@ -85,6 +41,7 @@ int main(int ac, char **av)
 	mlx_put_image_to_window(
 							hooks.mlx, hooks.win,
 							img.img, 0, 0);
+	mlx_hook(hooks.win, ON_DESTROY, 0, destroy, &hooks);
 	mlx_hook(hooks.win, ON_KEYDOWN, 0, close_win, &hooks);
 	mlx_loop(hooks.mlx);
 	return (0);
