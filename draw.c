@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:16:05 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/14 23:11:31 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/15 01:10:16 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,15 +117,15 @@ void link_point(t_hooks *hooks, int row, int col)
     t_point strt;
     t_point end;
     
-    strt.x = col * ( WIDTH / hooks->width_grid / 2);
-    strt.y = row * ( WIDTH / hooks->height_grid / 2);
+    strt.x = col * hooks->x_factor;
+    strt.y = row * hooks->y_factor;
     strt.z = get_z(hooks->matrix[row][col], hooks);
     strt.color = get_color(hooks->matrix[row][col], hooks);
     get_real_point(hooks, &strt);
     if (((col + 1) < hooks->width_grid) && row < hooks->height_grid)
     {
-        end.x = (col + 1) * ( WIDTH / hooks->width_grid / 2);
-        end.y = row * ( WIDTH / hooks->height_grid / 2);
+        end.x = (col + 1) * hooks->x_factor;
+        end.y = row * hooks->y_factor;
         end.z = get_z(hooks->matrix[row][col + 1], hooks);
         end.color = get_color(hooks->matrix[row][col + 1], hooks);
         get_real_point(hooks, &end);
@@ -133,8 +133,8 @@ void link_point(t_hooks *hooks, int row, int col)
     }
     if (((row + 1) < hooks->height_grid) && col < hooks->width_grid)
     {
-        end.x = col * ( WIDTH / hooks->width_grid / 2);
-        end.y = (row + 1) * ( WIDTH / hooks->height_grid / 2);
+        end.x = col * hooks->x_factor;
+        end.y = (row + 1) * hooks->y_factor;
         end.z = get_z(hooks->matrix[row + 1][col], hooks);
         end.color = get_color(hooks->matrix[row + 1][col], hooks);
         get_real_point(hooks, &end);

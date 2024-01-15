@@ -38,8 +38,8 @@ void    mark_points(t_hooks *hooks)
         j = 0;
         while (j < hooks->width_grid)
         {
-            point.x = j * (WIDTH / hooks->width_grid / 2);
-            point.y = i * (WIDTH / hooks->height_grid / 2);
+            point.x = j * hooks->x_factor;
+            point.y = i * hooks->y_factor;
             point.z = get_z(hooks->matrix[i][j], hooks);
             point.color = get_color(hooks->matrix[i][j], hooks);
             cartesian(hooks,

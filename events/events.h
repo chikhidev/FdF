@@ -8,5 +8,7 @@ void    reset_exit_handler(t_hooks *hooks, int keycode);
 void    link_cart_handler(t_hooks *hooks, int keycode);
 void    handle_moving(t_hooks *hooks, int keycode);
 void    handle_scaling(t_hooks *hooks, int keycode);
+void    handle_z_scaling(t_hooks *hooks, int keycode);
+void    handle_xy_scaling(t_hooks *hooks, int keycode);
 
 # endif

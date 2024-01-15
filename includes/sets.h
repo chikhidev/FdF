@@ -18,8 +18,10 @@
 # define BLUE_COLOR 0x33BBFF
 # define GREEN_COLOR 0x3FF86
 # define WHITE_COLOR 0xFFFFFF
-# define HIGH_LEVEL_COLOR 0xFF7F50
-# define LOW_LEVEL_COLOR 0x9ce3aa
+# define HIGH_LEVEL_COLOR 0xF8E559
+# define LOW_LEVEL_COLOR 0x864AF9
+
+# define Z_MOY 30
 
 typedef struct s_data
 {
@@ -43,6 +45,8 @@ typedef struct s_hooks
 	int			z_max;
 	int			z_min;
 	double		z_factor;
+	double		x_factor;
+	double		y_factor;
 	double		base_cartis[6];
 	double		scale;
 	double 		x_angle;

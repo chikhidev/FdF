@@ -30,8 +30,6 @@ int 		get_z(char *str, t_hooks *hooks);
 int 		get_color(char *str, t_hooks *hooks);
 int	    	cols_count(char **arr, t_hooks *hooks);
 void	    show_guide(t_hooks *hooks);
-void	    change_pixel_color(t_data *img, int x, int y,
-        int change);
 
 void		put_the_pixel(t_data *img, int x, int y, int color);
 int 		load_map(t_hooks *hooks, char *file);
@@ -44,6 +42,5 @@ void    	draw_cartesian(t_hooks *hooks);
 int         get_real_x(t_hooks *hooks, int x, int y, int z);
 int         get_real_y(t_hooks *hooks, int x, int y, int z);
 void        get_real_point(t_hooks *hooks, t_point *point);
-void        make_background(t_hooks *hooks, int width);
 
 #endif

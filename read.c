@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 09:58:54 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/14 17:33:21 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/15 01:19:58 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,15 @@ int load_map(t_hooks *hooks, char *file)
     fd = open(file, O_RDONLY);
     if (fd == -1)
         print_error("Map file not found\n", 1);
-	hooks->width_grid = 0;
-    hooks->height_grid = 0;
     if (read_fdf(hooks, fd) == 0)
         return (0);
 	close(fd);
 	fd = open(file, O_RDONLY);
     ft_printf("range of z: [%d, %d]\n", hooks->z_max, hooks->z_min);
-    if (hooks->z_max > 50 || hooks->z_min < -50)
+    if (hooks->z_max > Z_MOY || hooks->z_min < -Z_MOY)
         hooks->z_factor = 1;
+    hooks->x_factor = WIDTH / hooks->width_grid / 2;
+    hooks->y_factor = WIDTH / hooks->height_grid / 2;
     generate_map(hooks, fd);
     return (1);
 }

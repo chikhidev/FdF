@@ -10,6 +10,9 @@ void reset_exit_handler(t_hooks *hooks, int keycode)
     else if (keycode == 15)
     {
         config_hooks(hooks);
+        hooks->z_factor = 50;
+        if (hooks->z_max > Z_MOY || hooks->z_min < -Z_MOY)
+            hooks->z_factor = 1;
         render_next_frame(hooks);
     }
 }
