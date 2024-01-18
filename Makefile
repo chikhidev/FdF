@@ -19,7 +19,7 @@ SRC = 	config.c \
 		views.c \
 	  	main.c \
 	  	events_listener.c \
-	  	events/conf.c events/moving.c events/renderer.c events/rotation.c events/game_eng.c
+	  	events/conf.c events/moving.c events/renderer.c events/rotation.c
 
 OBJ = $(SRC:.c=.o)
 GNL = get_next_line.o

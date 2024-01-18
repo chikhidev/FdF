@@ -21,7 +21,7 @@
 # define HIGH_LEVEL_COLOR 0x00FFC5
 # define LOW_LEVEL_COLOR 0x0075A2
 
-# define Z_MOY 30
+# define Z_MOY 40
 
 typedef struct s_data
 {
@@ -34,15 +34,15 @@ typedef struct s_data
 
 typedef struct s_hooks
 {
+	t_data		img;
 	void		*mlx;
 	void		*win;
-	t_data		img;
+	char		***matrix;
+	char		**arr;
 	void		*logo;
+	char		*tmp_string;
 	int			width_grid;
 	int			height_grid;
-	char		***matrix;
-	char		*tmp_string;
-	char		**arr;
 	int			z_max;
 	int			z_min;
 	double		z_factor;
@@ -55,12 +55,11 @@ typedef struct s_hooks
 	int 		x_offset;
 	int 		y_offset;
 	int			allow_link;
-	int			show_cartesian;
 	double		move_step;
 	int			most_left_x;
 	int			most_right_x;
 	int			most_top_y;
-	int			most_bottom_y;
+	int			most_bottom_y; 
 }	t_hooks;
 
 enum

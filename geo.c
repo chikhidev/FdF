@@ -21,19 +21,8 @@ void    center_map(t_hooks *hooks)
     bottom.y = hooks->height_grid * hooks->y_factor;
     bottom.z = get_z(hooks->matrix[hooks->height_grid - 1][hooks->width_grid - 1],
             hooks);
-    get_real_point(hooks, &left);
-    get_real_point(hooks, &right);
-    get_real_point(hooks, &top);
-    get_real_point(hooks, &bottom);
-    ft_printf("-------------------\n");;
     hooks->x_offset = (WIDTH - (right.x - left.x) / 2);
     hooks->y_offset = (HEIGHT - (right.x - left.x) / 2);
-    ft_printf("width of map: %d\n", right.x - left.x);
-    ft_printf("height of map: %d\n", bottom.y - top.y);
-    ft_printf("x_offset: %d\n", hooks->x_offset);
-    ft_printf("y_offset: %d\n", hooks->y_offset);
-    ft_printf("left padding should be: %d\n", hooks->x_offset);
-    ft_printf("top padding should be: %d\n", hooks->y_offset);
 }
 
 int get_z(char *str, t_hooks *hooks)

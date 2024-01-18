@@ -18,7 +18,6 @@ typedef struct s_game
 int     event_listener(int keycode, t_hooks *hooks);
 int     render_next_frame(t_hooks *hooks);
 void    reset(t_hooks *hooks);
-void    setup_game(t_hooks *hooks);
 void    reset_exit_handler(t_hooks *hooks, int keycode);
 void    link_cart_handler(t_hooks *hooks, int keycode);
 void    handle_moving(t_hooks *hooks, int keycode);
