@@ -1,5 +1,21 @@
 #include "./includes/header.h"
 
+void	check_validity(t_hooks *hooks, char **arr, int i)
+{
+	if (!char_is_degits(&arr[i][0]))
+	{
+		ft_printf("Error: Invalid syntax, line %d, col %d\n",
+			hooks->height_grid + 1, i + 1);
+		exit(1);
+	}
+	if (is_overflowed_int(arr[i]))
+	{
+		ft_printf("Error: Found an overflow, line: %d, col %d\n",
+			hooks->height_grid + 1, i + 1);
+		exit(1);
+	}
+}
+
 int	cols_count(char **arr, t_hooks *hooks)
 {
 	int	i;
@@ -8,12 +24,7 @@ int	cols_count(char **arr, t_hooks *hooks)
 	i = 0;
 	while (arr[i])
 	{
-		//5 8 0 4,0xFF0000
-		if (!ft_isdigit(arr[i][0]) && arr[i][0] != '-' && arr[i][0] != '+')
-		{
-			ft_printf("Invalid syntax, line %d\n", 1, hooks->height_grid + 1);
-			exit(1);
-		}
+		check_validity(hooks, arr, i);
 		z_value = ft_atoi(arr[i]);
 		if (hooks->height_grid == 0 && i == 0)
 		{
@@ -22,10 +33,8 @@ int	cols_count(char **arr, t_hooks *hooks)
 		}
 		else
 		{
-			if (z_value > hooks->z_max)
-				hooks->z_max = z_value;
-			if (z_value < hooks->z_min)
-				hooks->z_min = z_value;
+			z_value > hooks->z_max ? hooks->z_max = z_value : 0;
+			z_value < hooks->z_min ? hooks->z_min = z_value : 0;
 		}
 		i++;
 	}
@@ -52,36 +61,6 @@ int	atoi_hexa(char *str)
 		i++;
 	}
 	return (res);
-}
-
-void	show_guide(t_hooks *hooks)
-{
-	char	*str;
-
-	if (HEIGHT < 230)
-		return ;
-	str = ft_strjoin("Points rendered: ", ft_itoa(
-		hooks->width_grid * hooks->height_grid)
-	);
-	mlx_string_put(hooks->mlx, hooks->win, 15, 10, 0x00FFFFFF, str);
-	free(str);
-	str = ft_strjoin("Scale: ", ft_itoa(hooks->scale));
-	mlx_string_put(hooks->mlx, hooks->win, 15, 110, 0x00FFFFFF, str);
-	free(str);
-	str = ft_strjoin("Z factor: ", ft_itoa(hooks->z_factor));
-	mlx_string_put(hooks->mlx, hooks->win, 15, 30, 0x00FFFFFF, str);
-	free(str);
-	str = ft_strjoin("X angle: ", ft_itoa(hooks->x_angle));
-	mlx_string_put(hooks->mlx, hooks->win, 15, 50, 0x00FFFFFF, str);
-	free(str);
-	str = ft_strjoin("Y angle: ", ft_itoa(hooks->y_angle));
-	mlx_string_put(hooks->mlx, hooks->win, 15, 70, 0x00FFFFFF, str);
-	free(str);
-	mlx_string_put(hooks->mlx, hooks->win, 15, 90, 0x00FFFFFF, "Zoom: z/x");
-	mlx_string_put(hooks->mlx, hooks->win, 15, 130, 0x00FFFFFF, "Reset: r");
-	mlx_string_put(hooks->mlx, hooks->win, 15, 170, 0x00FFFFFF, "Dots view: l (on/off)");
-	mlx_string_put(hooks->mlx, hooks->win, 15, 150, 0x00FFFFFF, "Show cartesian: c (on/off)");
-	mlx_string_put(hooks->mlx, hooks->win, 15, 190, 0x00FFFFFF, "Exit: esc");
 }
 
 int	valid_extention(char	*name)

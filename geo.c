@@ -1,4 +1,40 @@
 #include "./includes/header.h"
+#include "./events/events.h"
+
+void    center_map(t_hooks *hooks)
+{
+    t_point left;
+    t_point right;
+    t_point top;
+    t_point bottom;
+
+    left.x = 0;
+    left.y = hooks->height_grid * hooks->y_factor;
+    left.z = get_z(hooks->matrix[hooks->height_grid - 1][0], hooks);
+    right.x = hooks->width_grid * hooks->x_factor;
+    right.y = 0;
+    right.z = get_z(hooks->matrix[0][hooks->width_grid - 1], hooks);
+    top.x = 0;
+    top.y = 0;
+    top.z = get_z(hooks->matrix[0][0], hooks);
+    bottom.x = hooks->width_grid * hooks->x_factor;
+    bottom.y = hooks->height_grid * hooks->y_factor;
+    bottom.z = get_z(hooks->matrix[hooks->height_grid - 1][hooks->width_grid - 1],
+            hooks);
+    get_real_point(hooks, &left);
+    get_real_point(hooks, &right);
+    get_real_point(hooks, &top);
+    get_real_point(hooks, &bottom);
+    ft_printf("-------------------\n");;
+    hooks->x_offset = (WIDTH - (right.x - left.x) / 2);
+    hooks->y_offset = (HEIGHT - (right.x - left.x) / 2);
+    ft_printf("width of map: %d\n", right.x - left.x);
+    ft_printf("height of map: %d\n", bottom.y - top.y);
+    ft_printf("x_offset: %d\n", hooks->x_offset);
+    ft_printf("y_offset: %d\n", hooks->y_offset);
+    ft_printf("left padding should be: %d\n", hooks->x_offset);
+    ft_printf("top padding should be: %d\n", hooks->y_offset);
+}
 
 int get_z(char *str, t_hooks *hooks)
 {
@@ -42,9 +78,7 @@ void    mark_points(t_hooks *hooks)
             point.y = i * hooks->y_factor;
             point.z = get_z(hooks->matrix[i][j], hooks);
             point.color = get_color(hooks->matrix[i][j], hooks);
-            cartesian(hooks,
-                point.x, point.y,
-                point.z, point.color);
+            cartesian(hooks, &point);
             if (hooks->allow_link)
                 link_point(hooks, i, j);
             j++;

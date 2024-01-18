@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 09:58:54 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/15 01:19:58 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/16 18:18:38 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int read_fdf(t_hooks *hooks, int fd) {
     while (process_line(hooks, fd)) {
         if (hooks->width_grid == 0)
             print_error("Bad grid\n", 1);
-        if (hooks->width_grid < 0 || hooks->height_grid < 1)
+        if (hooks->width_grid < 0 || hooks->height_grid < 0)
             print_error("Map too large, can't deal with it\n", 1);
     }
     if (hooks->width_grid * hooks->height_grid > 50000)
@@ -91,6 +91,10 @@ int load_map(t_hooks *hooks, char *file)
         return (0);
 	close(fd);
 	fd = open(file, O_RDONLY);
+    if (hooks->height_grid == 0 || hooks->width_grid == 0)
+        print_error("Map is empty\n", 1);
+    if (hooks->height_grid == 1 && hooks->width_grid == 1)
+        print_error("You have only one point, nothing will be displayed\n", 1);
     ft_printf("range of z: [%d, %d]\n", hooks->z_max, hooks->z_min);
     if (hooks->z_max > Z_MOY || hooks->z_min < -Z_MOY)
         hooks->z_factor = 1;

@@ -18,8 +18,8 @@
 # define BLUE_COLOR 0x33BBFF
 # define GREEN_COLOR 0x3FF86
 # define WHITE_COLOR 0xFFFFFF
-# define HIGH_LEVEL_COLOR 0xF8E559
-# define LOW_LEVEL_COLOR 0x864AF9
+# define HIGH_LEVEL_COLOR 0x00FFC5
+# define LOW_LEVEL_COLOR 0x0075A2
 
 # define Z_MOY 30
 
@@ -37,6 +37,7 @@ typedef struct s_hooks
 	void		*mlx;
 	void		*win;
 	t_data		img;
+	void		*logo;
 	int			width_grid;
 	int			height_grid;
 	char		***matrix;
@@ -49,14 +50,17 @@ typedef struct s_hooks
 	double		y_factor;
 	double		base_cartis[6];
 	double		scale;
-	double 		x_angle;
-	double 		y_angle;
 	int 		x_center;
 	int 		y_center;
 	int 		x_offset;
 	int 		y_offset;
 	int			allow_link;
 	int			show_cartesian;
+	double		move_step;
+	int			most_left_x;
+	int			most_right_x;
+	int			most_top_y;
+	int			most_bottom_y;
 }	t_hooks;
 
 enum

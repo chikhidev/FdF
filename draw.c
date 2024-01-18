@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:16:05 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/15 01:10:16 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/16 12:23:29 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,54 +25,16 @@ void	put_the_pixel(t_data *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void interpolate_color(t_point *start, t_point *end, int *result_color, double t)
+int choose_color(t_point *p0, t_point *p1)
 {
-    result_color[0] = (int)((1.0 - t) * start->color + t * end->color);
-    result_color[1] = (int)((1.0 - t) * (start->color >> 8) + t * (end->color >> 8));
-    result_color[2] = (int)((1.0 - t) * (start->color >> 16) + t * (end->color >> 16));
+    if (p0->color == p1->color)
+        return (p0->color);
+    if (p1->z > p0->z)
+        return (p1->color);
+    else if (p0->z > p1->z)
+        return (p0->color);
+    return (WHITE_COLOR);
 }
-
-// void draw_line(t_hooks *hooks, t_point *point0, t_point *point1)
-// {
-//     int dx = abs(point1->x - point0->x);
-//     int dy = abs(point1->y - point0->y);
-//     int sx = point0->x < point1->x ? 1 : -1;
-//     int sy = point0->y < point1->y ? 1 : -1;
-//     int err = (dx > dy ? dx : -dy) / 2;
-//     int e2;
-
-//     double length = sqrt((double)(dx * dx + dy * dy));
-//     double t = 0.0; // Interpolation parameter
-
-//     while (1)
-//     {
-//         int interpolated_color[3];
-//         interpolate_color(point0, point1, interpolated_color, t);
-
-//         put_the_pixel(&hooks->img, point0->x, point0->y,
-//                       (interpolated_color[2] << 16) | (interpolated_color[1] << 8) | interpolated_color[0]);
-
-//         if (point0->x == point1->x && point0->y == point1->y)
-//             break;
-
-//         e2 = err;
-//         if (e2 > -dx)
-//         {
-//             err -= dy;
-//             point0->x += sx;
-//         }
-//         if (e2 < dy)
-//         {
-//             err += dx;
-//             point0->y += sy;
-//         }
-
-//         // Update the interpolation parameter
-//         t = sqrt((double)((point0->x - point1->x) * (point0->x - point1->x) +
-//                           (point0->y - point1->y) * (point0->y - point1->y))) / length;
-//     }
-// }
-
 
 void draw_line(t_hooks *hooks, t_point *point0, t_point *point1)
 {
@@ -90,10 +52,7 @@ void draw_line(t_hooks *hooks, t_point *point0, t_point *point1)
     inc[1] = point0->y;
     while (1)
     {
-        int interpolated_color[3];
-        interpolate_color(point0, point1, interpolated_color, t);
-        put_the_pixel(&hooks->img, inc[0], inc[1],
-                      (interpolated_color[2] << 16) | (interpolated_color[1] << 8) | interpolated_color[0]);
+        put_the_pixel(&hooks->img, inc[0], inc[1], choose_color(point0, point1));
         if (inc[0] == point1->x && inc[1] == point1->y)
             break;
         e2 = err;

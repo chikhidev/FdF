@@ -13,8 +13,13 @@
 #include "sets.h"
 #include "geo.h"
 
+void        iso_view(t_hooks *hooks);
+void        flat_view(t_hooks *hooks);
+
+void	    _setup_(t_hooks *hooks);
 void	    config_hooks(t_hooks *hooks);
 void        refresh_image(t_hooks *hooks, t_data *img);
+void        center_map(t_hooks *hooks);
 
 int         print_error(const char *message, int error_signal);
 void	    exit_free(t_hooks *hooks);
@@ -25,6 +30,8 @@ void        free_split(char **splitted);
 void        exit_free(t_hooks *hooks);
 int         destroy(int keycode, t_hooks *hooks);
 
+int         is_overflowed_int(char *str);
+int         char_is_degits(char *str);
 int			atoi_hexa(char *str);
 int 		get_z(char *str, t_hooks *hooks);
 int 		get_color(char *str, t_hooks *hooks);
@@ -37,8 +44,7 @@ int 		load_map(t_hooks *hooks, char *file);
 void 		link_point(t_hooks *hooks, int row, int col);
 void    	mark_points(t_hooks *hooks);
 
-void		cartesian(t_hooks *hooks, int x, int y, int z, int color);
-void    	draw_cartesian(t_hooks *hooks);
+void        cartesian(t_hooks *hooks, t_point *point);
 int         get_real_x(t_hooks *hooks, int x, int y, int z);
 int         get_real_y(t_hooks *hooks, int x, int y, int z);
 void        get_real_point(t_hooks *hooks, t_point *point);

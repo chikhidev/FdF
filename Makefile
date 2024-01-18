@@ -6,33 +6,25 @@ RESET = \033[0m
 NAME = fdf
 CFLAGS = -Wall -Wextra -Werror -Imlx 
 LDFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
+
 SRC = 	config.c \
 		draw.c \
 		string.c \
-		geo.c \
-      	cartesian.c \
-      	read.c \
-		free_exit.c \
-      	error.c \
-	  	main.c
-
-BSRC = 	config.c \
-		draw.c \
-		string.c \
+		string2.c \
       	geo.c \
       	cartesian.c \
       	read.c \
 		free_exit.c \
       	error.c \
-	  	bmain.c \
+		views.c \
+	  	main.c \
 	  	events_listener.c \
-	  	events/conf.c events/moving.c events/renderer.c events/rotation.c
+	  	events/conf.c events/moving.c events/renderer.c events/rotation.c events/game_eng.c
 
 OBJ = $(SRC:.c=.o)
 GNL = get_next_line.o
 LIBFT = libft.a
 FTPRINTF = libftprintf.a
-BONUS_OBJ = $(BSRC:.c=.o)
 
 all: $(NAME)
 
@@ -57,23 +49,14 @@ libftprintf.a:
 	@echo "$(YELLOW)Compiling ft_printf 🛠️$(RESET)"
 	@make -C ./ft_printf && mv ./ft_printf/libftprintf.a .
 
-bonus: $(LIBFT) $(GNL) $(FTPRINTF) $(BONUS_OBJ)
-	@echo "$(GREEN)Compiling and linking bonus executable 🤓☁️$(RESET)"
-	@cc $(BONUS_OBJ) $(GNL) $(LIBFT) $(FTPRINTF) -o bonus_$(NAME) $(LDFLAGS)
-	@echo "$(GREEN)Done! -----------------------------------------$(RESET)"
-
-BONUS_OBJ: BSRC
-	@echo "$(YELLOW)Compiling $< 🛠️$(RESET)"
-	@cc -c $< $(CFLAGS) -o $@
-
 clean:
 	@echo "$(RED)Removing objects and executable 🧹$(RESET)"
 	@make -C ./libft clean
-	@rm -f $(OBJ) $(GNL) $(LIBFT) $(FTPRINTF) $(BONUS_OBJ)
+	@rm -f $(OBJ) $(GNL) $(LIBFT) $(FTPRINTF)
 
 fclean: clean 
-	@echo "$(RED)Removing $(NAME) and bonus executable 😢$(RESET)"
-	@rm -f $(NAME) bonus_$(NAME)
+	@echo "$(RED)Removing $(NAME) executable 😢$(RESET)"
+	@rm -f $(NAME)
 
 build: all clean
 
