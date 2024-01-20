@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:16:05 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/16 12:23:29 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/20 01:10:36 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,42 @@ void draw_line(t_hooks *hooks, t_point *point0, t_point *point1)
     int sy = point0->y < point1->y ? 1 : -1;
     int err = (dx > dy ? dx : -dy) / 2;
     int e2;
-    int inc[2];
+    register int inc[2];
+    double t;
+
     double length = sqrt((double)(dx * dx + dy * dy));
-    double t = 0.0;
 
     inc[0] = point0->x;
     inc[1] = point0->y;
+
+    // Precompute length outside the loop
+    double invLength = 1.0 / length;
+
     while (1)
     {
         put_the_pixel(&hooks->img, inc[0], inc[1], choose_color(point0, point1));
+
         if (inc[0] == point1->x && inc[1] == point1->y)
             break;
+
         e2 = err;
+
         if (e2 > -dx)
         {
             err -= dy;
             inc[0] += sx;
         }
+
         if (e2 < dy)
         {
             err += dx;
             inc[1] += sy;
         }
         t = sqrt((double)((inc[0] - point1->x) * (inc[0] - point1->x) +
-                           (inc[1] - point1->y) * (inc[1] - point1->y))) / length;
+                          (inc[1] - point1->y) * (inc[1] - point1->y))) * invLength;
     }
 }
+
 
 void link_point(t_hooks *hooks, int row, int col)
 {
@@ -81,6 +91,8 @@ void link_point(t_hooks *hooks, int row, int col)
     strt.z = get_z(hooks->matrix[row][col], hooks);
     strt.color = get_color(hooks->matrix[row][col], hooks);
     get_real_point(hooks, &strt);
+    if ((strt.x < 0 || strt.x >= WIDTH || strt.y < 0 || strt.y >= HEIGHT))
+        return ;
     if (((col + 1) < hooks->width_grid) && row < hooks->height_grid)
     {
         end.x = (col + 1) * hooks->x_factor;

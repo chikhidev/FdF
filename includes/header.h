@@ -11,10 +11,6 @@
 #include <fcntl.h>
 #include <math.h>
 #include "sets.h"
-#include "geo.h"
-
-void        iso_view(t_hooks *hooks);
-void        flat_view(t_hooks *hooks);
 
 void	    _setup_(t_hooks *hooks);
 void	    config_hooks(t_hooks *hooks);
@@ -32,7 +28,7 @@ int         destroy(int keycode, t_hooks *hooks);
 
 int         is_overflowed_int(char *str);
 int         char_is_degits(char *str);
-int			atoi_hexa(char *str);
+int	        atoi_base(char *str, int base);
 int 		get_z(char *str, t_hooks *hooks);
 int 		get_color(char *str, t_hooks *hooks);
 int	    	cols_count(char **arr, t_hooks *hooks);
@@ -45,8 +41,8 @@ void 		link_point(t_hooks *hooks, int row, int col);
 void    	mark_points(t_hooks *hooks);
 
 void        cartesian(t_hooks *hooks, t_point *point);
-int         get_real_x(t_hooks *hooks, int x, int y, int z);
-int         get_real_y(t_hooks *hooks, int x, int y, int z);
+int         get_real_x(t_hooks *hooks, t_point *point);
+int         get_real_y(t_hooks *hooks, t_point *point);
 void        get_real_point(t_hooks *hooks, t_point *point);
 
 #endif

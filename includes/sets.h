@@ -32,6 +32,14 @@ typedef struct s_data
 	int		endian;
 }	t_data;
 
+typedef struct s_point
+{
+    int	x;
+    int	y;
+    int	z;
+    int color;
+}	t_point;
+
 typedef struct s_hooks
 {
 	t_data		img;
@@ -43,13 +51,14 @@ typedef struct s_hooks
 	char		*tmp_string;
 	int			width_grid;
 	int			height_grid;
+	t_point		center_point;
 	int			z_max;
 	int			z_min;
 	double		z_factor;
 	double		x_factor;
 	double		y_factor;
-	double		base_cartis[6];
 	double		scale;
+	double		facing_angle;
 	int 		x_center;
 	int 		y_center;
 	int 		x_offset;
@@ -60,6 +69,9 @@ typedef struct s_hooks
 	int			most_right_x;
 	int			most_top_y;
 	int			most_bottom_y; 
+	double		z_angle;
+	double		x_angle;
+	double		y_angle;
 }	t_hooks;
 
 enum

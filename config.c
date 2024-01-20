@@ -15,12 +15,13 @@ void	config_hooks(t_hooks *hooks)
 	hooks->y_offset = 0;
 	hooks->allow_link = 1;
 	hooks->move_step = 25;
+	hooks->facing_angle = 30;
+	hooks->z_angle = 0;
 	if (hooks->width_grid != 0 && hooks->height_grid != 0)
 	{
 		hooks->x_factor = WIDTH / hooks->width_grid / 2;
 		hooks->y_factor = WIDTH / hooks->height_grid / 2;
 	}
-	iso_view(hooks);
 }
 
 void refresh_image(t_hooks *hooks, t_data *img)

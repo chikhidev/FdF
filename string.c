@@ -41,26 +41,32 @@ int	cols_count(char **arr, t_hooks *hooks)
 	return (i);
 }
 
-int	atoi_hexa(char *str)
+int	atoi_base(char *str, int base)
 {
-	int	i;
-	int	res;
+	int		i;
+	int		nbr;
+	int		sign;
 
 	i = 0;
-	res = 0;
-	while (str[i] && str[i] != ',')
+	nbr = 0;
+	sign = 1;
+	if (str[i] == '-')
+		sign = -1;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	if (base == 16 && str[i] == '0' && str[i + 1] == 'x')
+		i += 2;
+	while (str[i])
 	{
-		if (str[i] >= '0' && str[i] <= '9')
-			res = res * 16 + str[i] - '0';
-		else if (str[i] >= 'A' && str[i] <= 'F')
-			res = res * 16 + str[i] - 'A' + 10;
-		else if (str[i] >= 'a' && str[i] <= 'f')
-			res = res * 16 + str[i] - 'a' + 10;
+		if (base == 16 && str[i] >= 'A' && str[i] <= 'F')
+			nbr = nbr * base + (str[i] - 'A' + 10);
+		else if (base == 16 && str[i] >= 'a' && str[i] <= 'f')
+			nbr = nbr * base + (str[i] - 'a' + 10);
 		else
-			return (0);
+			nbr = nbr * base + (str[i] - '0');
 		i++;
 	}
-	return (res);
+	return (nbr * sign);
 }
 
 int	valid_extention(char	*name)

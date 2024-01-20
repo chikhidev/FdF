@@ -21,8 +21,8 @@ void    center_map(t_hooks *hooks)
     bottom.y = hooks->height_grid * hooks->y_factor;
     bottom.z = get_z(hooks->matrix[hooks->height_grid - 1][hooks->width_grid - 1],
             hooks);
-    hooks->x_offset = (WIDTH - (right.x - left.x) / 2);
-    hooks->y_offset = (HEIGHT - (right.x - left.x) / 2);
+    hooks->x_offset = (WIDTH / 2);
+    hooks->y_offset = (HEIGHT / 2);
 }
 
 int get_z(char *str, t_hooks *hooks)
@@ -39,7 +39,7 @@ int get_color(char *str, t_hooks *hooks)
     color = ft_strchr(str, ',');
     if (color)
     {
-        color_value = atoi_hexa(color + 3);
+        color_value = atoi_base(color + 1, 16);
         return (color_value);
     }
     z = get_z(str, hooks);
@@ -49,6 +49,17 @@ int get_color(char *str, t_hooks *hooks)
         return (WHITE_COLOR);
     else
         return (HIGH_LEVEL_COLOR);
+}
+
+int is_center_point(t_hooks *hooks, int i, int j)
+{
+    if (hooks->width_grid % 2 == 0 && hooks->height_grid % 2 == 0)
+        return (i == hooks->height_grid / 2 && j == hooks->width_grid / 2 - 1);
+    else if (hooks->height_grid % 2 == 0 && hooks->width_grid % 2 != 0)
+        return (i == hooks->height_grid / 2 && j == (hooks->width_grid / 2 - 1));
+    else if (hooks->height_grid % 2 != 0 && hooks->width_grid % 2 == 0)
+        return (i == hooks->height_grid / 2 - 1 && j == hooks->width_grid / 2);
+    return (i == hooks->height_grid / 2 - 1 && j == hooks->width_grid / 2 - 1);
 }
 
 void    mark_points(t_hooks *hooks)
@@ -67,7 +78,10 @@ void    mark_points(t_hooks *hooks)
             point.y = i * hooks->y_factor;
             point.z = get_z(hooks->matrix[i][j], hooks);
             point.color = get_color(hooks->matrix[i][j], hooks);
-            cartesian(hooks, &point);
+            if (is_center_point(hooks, i, j))
+                hooks->center_point = point;
+            get_real_point(hooks, &point);
+            put_the_pixel(&hooks->img, point.x, point.y, point.color);
             if (hooks->allow_link)
                 link_point(hooks, i, j);
             j++;
