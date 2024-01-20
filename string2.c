@@ -38,7 +38,7 @@ int	char_is_degits(char *str)
 	return (1);
 }
 
-void	guide_helper(t_hooks *hooks)
+void	guide_helper(t_hooks *hooks, int *logo_width, int *logo_height)
 {
 	char	*str;
 	char	*data;
@@ -60,22 +60,34 @@ void	guide_helper(t_hooks *hooks)
 	mlx_string_put(hooks->mlx, hooks->win, 15, 50, 0x00FFFFFF, str);
 	free(data);
 	free(str);
+	hooks->logo = mlx_xpm_file_to_image(hooks->mlx, "./imgs/logo.xpm", logo_width, logo_height);
+	mlx_put_image_to_window(hooks->mlx, hooks->win, hooks->logo, WIDTH - 115, -10);
 }
 
 void	show_guide(t_hooks *hooks)
 {
 	int		logo_width;
 	int		logo_height;
+	char	*data;
+	char	*str;
 
-	guide_helper(hooks);
+	logo_height = 100;
+	logo_width = 100;
+	guide_helper(hooks, &logo_width, &logo_height);
 	mlx_string_put(hooks->mlx, hooks->win, 15, 70, 0x00FFFFFF, "Zoom: z/x");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 90, 0x00FFFFFF, "Reset: r");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 110, 0x00FFFFFF, "Dots view: l (on/off)");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 130, 0x00FFFFFF, "Show cartesian: c (on/off)");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 150, 0x00FFFFFF, "Top view(2D): f");
-	mlx_string_put(hooks->mlx, hooks->win, 15, 170, 0x00FFFFFF, "Exit: esc");
-	logo_height = 100;
-	logo_width = 100;
-	hooks->logo = mlx_xpm_file_to_image(hooks->mlx, "./imgs/logo.xpm", &logo_width, &logo_height);
-	mlx_put_image_to_window(hooks->mlx, hooks->win, hooks->logo, WIDTH - 115, -10);
+	data = ft_itoa(hooks->z_angle);
+	str = ft_strjoin("Z angle: ", data);
+	mlx_string_put(hooks->mlx, hooks->win, 15, 170, 0x00FFFFFF, str);
+	free(data);
+	free(str);
+	data = ft_itoa(hooks->x_angle);
+	str = ft_strjoin("X angle: ", data);
+	mlx_string_put(hooks->mlx, hooks->win, 15, 190, 0x00FFFFFF, str);
+	free(data);
+	free(str);
+	mlx_string_put(hooks->mlx, hooks->win, 15, 210, 0x00FFFFFF, "Exit: esc");
 }

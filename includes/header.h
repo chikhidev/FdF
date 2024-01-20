@@ -17,6 +17,11 @@ void	    config_hooks(t_hooks *hooks);
 void        refresh_image(t_hooks *hooks, t_data *img);
 void        center_map(t_hooks *hooks);
 
+void        render_top_left(t_hooks *hooks);
+void        render_top_right(t_hooks *hooks);
+void        render_bottom_left(t_hooks *hooks);
+void        render_bottom_right(t_hooks *hooks);
+
 int         print_error(const char *message, int error_signal);
 void	    exit_free(t_hooks *hooks);
 int	        valid_extention(char	*name);

@@ -7,46 +7,52 @@
 // real_x = x * cos(hooks->z_angle) – y * sin(hooks->z_angle)
 // real_y = x * sin(hooks->z_angle) + y * cos(hooks->z_angle)
 
+// x = (point->x - hooks->center_point.x) * cos(to_rad(hooks->z_angle)) - 
+//         (point->y - hooks->center_point.y) * sin(to_rad(hooks->z_angle));
+
+// y = (point->x - hooks->center_point.x) * sin(to_rad(hooks->z_angle)) + 
+//         (point->y - hooks->center_point.y) * cos(to_rad(hooks->z_angle));
+
 double to_rad(double angle) {
     return (angle * (M_PI / 180));
 }
 
 int get_real_x(t_hooks *hooks, t_point *point)
 {
-    int x;
-    int y;
+    t_point temp;
+    double ay;
+    double az;
 
-    x = (point->x - hooks->center_point.x) * cos(to_rad(hooks->z_angle)) - 
-                (point->y - hooks->center_point.y) * sin(to_rad(hooks->z_angle));
-    y = (point->x - hooks->center_point.x) * sin(to_rad(hooks->z_angle)) + 
-                (point->y - hooks->center_point.y) * cos(to_rad(hooks->z_angle));
-    point->x = x;
-    point->y = y;
-    return (hooks->scale * 
-            (
-                (point->x - point->y) *
-                cos(to_rad(hooks->facing_angle)
-                )
-            ) + 
-            hooks->x_offset);
+    ay = to_rad(hooks->y_angle);
+    az = to_rad(hooks->z_angle);
+    temp.x = (point->x - hooks->center_point.x) * cos(az) -
+        (point->y - hooks->center_point.y) * sin(az) +
+        hooks->center_point.x;
+
+    temp.y = (point->x - hooks->center_point.x) * sin(az) +
+        (point->y - hooks->center_point.y) * cos(az) +
+        hooks->center_point.y;
+
+    return hooks->scale * ((temp.x - temp.y) * cos(to_rad(hooks->facing_angle))) + hooks->x_offset;
 }
 
 int get_real_y(t_hooks *hooks, t_point *point)
 {
-    int x;
-    int y;
+    t_point temp;
+    double ay;
+    double az;
 
+    ay = to_rad(hooks->y_angle);
+    az = to_rad(hooks->z_angle);
+    temp.x = (point->x - hooks->center_point.x) * cos(az) -
+        (point->y - hooks->center_point.y) * sin(az) +
+        hooks->center_point.x;
 
-    x = (point->x - hooks->center_point.x) * cos(to_rad(hooks->z_angle)) - 
-                (point->y - hooks->center_point.y) * sin(to_rad(hooks->z_angle));
-    y = (point->x - hooks->center_point.x) * sin(to_rad(hooks->z_angle)) +
-                (point->y - hooks->center_point.y) * cos(to_rad(hooks->z_angle));
-    point->x = x;
-    point->y = y;
-    return (hooks->scale * (
-                (point->x + point->y) * 
-                sin(to_rad(hooks->facing_angle)) - point->z) + 
-                hooks->y_offset);
+    temp.y = (point->x - hooks->center_point.x) * sin(az) +
+        (point->y - hooks->center_point.y) * cos(az) +
+        hooks->center_point.y;
+
+    return hooks->scale * ((temp.x + temp.y) * sin(to_rad(hooks->facing_angle)) - point->z) + hooks->y_offset;
 }
 
 void    get_real_point(t_hooks *hooks, t_point *point)

@@ -62,17 +62,32 @@ int is_center_point(t_hooks *hooks, int i, int j)
     return (i == hooks->height_grid / 2 - 1 && j == hooks->width_grid / 2 - 1);
 }
 
+void    choose_render_direction(t_hooks *hooks)
+{
+    if (((int)hooks->z_angle >= 0 && (int)hooks->z_angle < 45) || ((int)hooks->z_angle > 225 && (int)hooks->z_angle < 270))
+        render_top_left(hooks);
+    else if (((int)hooks->z_angle >= 45 && (int)hooks->z_angle < 90) || ((int)hooks->z_angle >= 180 && (int)hooks->z_angle < 225))
+        render_bottom_left(hooks);
+    else if ((int)hooks->z_angle >= 90 && (int)hooks->z_angle < 180)
+        render_bottom_right(hooks);
+    else if (((int)hooks->z_angle >= 270 && (int)hooks->z_angle < 360) || (int)hooks->z_angle == 225)
+        render_top_right(hooks);
+}
+
 void    mark_points(t_hooks *hooks)
 {
     int     i;
     int     j;
     t_point point;
 
-    i = 0;
-    while (i < hooks->height_grid)
+    choose_render_direction(hooks);
+    i = hooks->direction.i_start;
+    while ((i < hooks->direction.i_end && hooks->direction.i_step == 1) ||
+            (i > hooks->direction.i_end && hooks->direction.i_step == -1))
     {
-        j = 0;
-        while (j < hooks->width_grid)
+        j = hooks->direction.j_start;
+        while ((j < hooks->direction.j_end && hooks->direction.j_step == 1) ||
+                (j > hooks->direction.j_end && hooks->direction.j_step == -1))
         {
             point.x = j * hooks->x_factor;
             point.y = i * hooks->y_factor;
@@ -84,8 +99,8 @@ void    mark_points(t_hooks *hooks)
             put_the_pixel(&hooks->img, point.x, point.y, point.color);
             if (hooks->allow_link)
                 link_point(hooks, i, j);
-            j++;
+            j += hooks->direction.j_step;
         }
-        i++;
+        i += hooks->direction.i_step;
     }
 }

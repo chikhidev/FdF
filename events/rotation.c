@@ -36,9 +36,19 @@ void    view_handle(t_hooks *hooks, int keycode)
         }
     }
     else if (keycode == 2)
-        hooks->z_angle += 5;
+    {
+        if (hooks->z_angle < 360)
+            hooks->z_angle += 5;
+        else
+            hooks->z_angle = 0;
+    }
     else if (keycode == 0)
-        hooks->z_angle -= 5;
+    {
+        if (hooks->z_angle > 0)
+            hooks->z_angle -= 5;
+        else
+            hooks->z_angle = 360;
+    }
     else if (keycode == 13)
         hooks->x_angle += 5;
     else if (keycode == 1)

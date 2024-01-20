@@ -17,6 +17,7 @@ SRC = 	config.c \
 		free_exit.c \
       	error.c \
 		views.c \
+		rendering_sides.c \
 	  	main.c \
 	  	events_listener.c \
 	  	events/conf.c events/moving.c events/renderer.c events/rotation.c

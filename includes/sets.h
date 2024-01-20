@@ -18,7 +18,7 @@
 # define BLUE_COLOR 0x33BBFF
 # define GREEN_COLOR 0x3FF86
 # define WHITE_COLOR 0xFFFFFF
-# define HIGH_LEVEL_COLOR 0x00FFC5
+# define HIGH_LEVEL_COLOR 0xffc61a
 # define LOW_LEVEL_COLOR 0x0075A2
 
 # define Z_MOY 40
@@ -40,6 +40,16 @@ typedef struct s_point
     int color;
 }	t_point;
 
+typedef struct direction
+{
+    int i_start;
+    int i_end;
+    int i_step;
+    int j_start;
+    int j_end;
+    int j_step;
+}   t_direction;
+
 typedef struct s_hooks
 {
 	t_data		img;
@@ -51,6 +61,7 @@ typedef struct s_hooks
 	char		*tmp_string;
 	int			width_grid;
 	int			height_grid;
+	t_direction	direction;
 	t_point		center_point;
 	int			z_max;
 	int			z_min;
