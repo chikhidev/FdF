@@ -10,13 +10,14 @@ void	_setup_(t_hooks *hooks)
 
 void	config_hooks(t_hooks *hooks)
 {
-	hooks->scale = .8;
+	hooks->scale = .5;
 	hooks->x_offset = 0;
 	hooks->y_offset = 0;
 	hooks->allow_link = 1;
 	hooks->move_step = 25;
-	hooks->facing_angle = 3;
-	hooks->z_angle = 30;
+	hooks->facing_angle = 30;
+	hooks->z_angle = 0;
+	hooks->y_angle = 30;
 	if (hooks->width_grid != 0 && hooks->height_grid != 0)
 	{
 		hooks->x_factor = WIDTH / hooks->width_grid / 3;

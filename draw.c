@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:16:05 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/20 01:10:36 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/20 21:40:44 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,79 +36,50 @@ int choose_color(t_point *p0, t_point *p1)
     return (WHITE_COLOR);
 }
 
-void draw_line(t_hooks *hooks, t_point *point0, t_point *point1)
+void init_point(t_hooks *hooks, t_point *point, int row, int col)
 {
-    int dx = abs(point1->x - point0->x);
-    int dy = abs(point1->y - point0->y);
-    int sx = point0->x < point1->x ? 1 : -1;
-    int sy = point0->y < point1->y ? 1 : -1;
-    int err = (dx > dy ? dx : -dy) / 2;
-    int e2;
-    register int inc[2];
-    double t;
+    point->x = col * hooks->x_factor;
+    point->y = row * hooks->y_factor;
+    point->z = get_z(hooks->matrix[row][col], hooks);
+    point->color = get_color(hooks->matrix[row][col], hooks);
+    get_real_point(hooks, point);
+}
 
-    double length = sqrt((double)(dx * dx + dy * dy));
+void dda(t_hooks *hooks, t_point *point0, t_point *point1)
+{
+    int dx = point1->x - point0->x;
+    int dy = point1->y - point0->y;
+    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+    double x_inc = dx / (double)steps;
+    double y_inc = dy / (double)steps;
+    double x = point0->x;
+    double y = point0->y;
+    int     i = 0;
 
-    inc[0] = point0->x;
-    inc[1] = point0->y;
-
-    // Precompute length outside the loop
-    double invLength = 1.0 / length;
-
-    while (1)
+    while (i <= steps)
     {
-        put_the_pixel(&hooks->img, inc[0], inc[1], choose_color(point0, point1));
-
-        if (inc[0] == point1->x && inc[1] == point1->y)
-            break;
-
-        e2 = err;
-
-        if (e2 > -dx)
-        {
-            err -= dy;
-            inc[0] += sx;
-        }
-
-        if (e2 < dy)
-        {
-            err += dx;
-            inc[1] += sy;
-        }
-        t = sqrt((double)((inc[0] - point1->x) * (inc[0] - point1->x) +
-                          (inc[1] - point1->y) * (inc[1] - point1->y))) * invLength;
+        put_the_pixel(&hooks->img, x, y, choose_color(point0, point1));
+        x += x_inc;
+        y += y_inc;
+        i++;
     }
 }
 
-
 void link_point(t_hooks *hooks, int row, int col)
 {
-    t_point strt;
-    t_point end;
-    
-    strt.x = col * hooks->x_factor;
-    strt.y = row * hooks->y_factor;
-    strt.z = get_z(hooks->matrix[row][col], hooks);
-    strt.color = get_color(hooks->matrix[row][col], hooks);
-    get_real_point(hooks, &strt);
-    if ((strt.x < 0 || strt.x >= WIDTH || strt.y < 0 || strt.y >= HEIGHT))
-        return ;
-    if (((col + 1) < hooks->width_grid) && row < hooks->height_grid)
+    t_point strt, end;
+
+    init_point(hooks, &strt, row, col);
+    if (strt.x < 0 || strt.x >= WIDTH || strt.y < 0 || strt.y >= HEIGHT)
+        return;
+    if ((col + 1) < hooks->width_grid)
     {
-        end.x = (col + 1) * hooks->x_factor;
-        end.y = row * hooks->y_factor;
-        end.z = get_z(hooks->matrix[row][col + 1], hooks);
-        end.color = get_color(hooks->matrix[row][col + 1], hooks);
-        get_real_point(hooks, &end);
-        draw_line(hooks, &strt, &end);
+        init_point(hooks, &end, row, col + 1);
+        dda(hooks, &strt, &end);
     }
-    if (((row + 1) < hooks->height_grid) && col < hooks->width_grid)
+    if ((row + 1) < hooks->height_grid)
     {
-        end.x = col * hooks->x_factor;
-        end.y = (row + 1) * hooks->y_factor;
-        end.z = get_z(hooks->matrix[row + 1][col], hooks);
-        end.color = get_color(hooks->matrix[row + 1][col], hooks);
-        get_real_point(hooks, &end);
-        draw_line(hooks, &strt, &end);
+        init_point(hooks, &end, row + 1, col);
+        dda(hooks, &strt, &end);
     }
 }

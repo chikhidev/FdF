@@ -16,6 +16,7 @@ typedef struct s_game
 }            t_game;
 
 int     event_listener(int keycode, t_hooks *hooks);
+void    cool_in_transition(t_hooks *hooks);
 int     render_next_frame(t_hooks *hooks);
 void    reset(t_hooks *hooks);
 void    reset_exit_handler(t_hooks *hooks, int keycode);

@@ -27,7 +27,7 @@ void    handle_scaling(t_hooks *hooks, int keycode)
     if (keycode == 6)
         (int)hooks->scale < 10 ? hooks->scale += .2 : 0;
     else if (keycode == 7)
-        (int)hooks->scale > 0 ? hooks->scale -= .2 : 0;
+        (float)hooks->scale > .5 ? hooks->scale -= .2 : 0;
     else
         return ;
     render_next_frame(hooks);

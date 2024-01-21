@@ -74,7 +74,7 @@ void    choose_render_direction(t_hooks *hooks)
         render_top_right(hooks);
 }
 
-void    mark_points(t_hooks *hooks)
+void    mark_points(t_hooks *hooks)      
 {
     int     i;
     int     j;
