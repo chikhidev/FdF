@@ -2,21 +2,10 @@
 # define EVENTS_H
 # include    "../includes/header.h"
 
-# define FRAME_RATE 30
-
-typedef struct s_game
-{
-    t_point *character;
-    void    *character_img;
-    int     can_move;
-    int     character_x;
-    int     character_y;
-    int     character_z;
-    int     is_save_to_move;
-}            t_game;
-
 int     event_listener(int keycode, t_hooks *hooks);
-void    cool_in_transition(t_hooks *hooks);
+void    update_limit(double   *ptr, double limit, double value);
+void    animate_angle_update(double *angle, double step);
+void    execute_cmd(t_hooks *hooks);
 int     render_next_frame(t_hooks *hooks);
 void    reset(t_hooks *hooks);
 void    reset_exit_handler(t_hooks *hooks, int keycode);

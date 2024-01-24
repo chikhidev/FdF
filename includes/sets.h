@@ -2,13 +2,8 @@
 # define SETS_H
 
 # define HEIGHT 1000
-# define WIDTH 1800
-# define DEFAULT_ANGLE 35
-# define AXIS_LENGTH 300
+# define WIDTH 1500
 # define WINDOW_NAME "FdF"
-
-# define X_OFFSET (WIDTH/2)
-# define Y_OFFSET (HEIGHT/2)
 
 # define RED "\033[0;31m"
 # define GREEN "\033[0;32m"
@@ -50,6 +45,12 @@ typedef struct direction
     int j_step;
 }   t_direction;
 
+typedef struct s_alphabet
+{
+	int		code;
+	char	*content;
+}   t_alphabet;
+
 typedef struct s_hooks
 {
 	t_data		img;
@@ -70,10 +71,8 @@ typedef struct s_hooks
 	double		y_factor;
 	double		scale;
 	double		facing_angle;
-	int 		x_center;
-	int 		y_center;
-	int 		x_offset;
-	int 		y_offset;
+	double 		x_offset;
+	double 		y_offset;
 	int			allow_link;
 	double		move_step;
 	int			most_left_x;
@@ -81,8 +80,9 @@ typedef struct s_hooks
 	int			most_top_y;
 	int			most_bottom_y; 
 	double		z_angle;
-	double		x_angle;
-	double		y_angle;
+	int			parallel_view;
+	int			cmd_mode;
+	char		*cmd;
 }	t_hooks;
 
 enum

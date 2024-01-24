@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 09:58:54 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/18 20:49:09 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/23 05:47:54 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ int load_map(t_hooks *hooks, char *file)
     ft_printf("range of z: [%d, %d]\n", hooks->z_max, hooks->z_min);
     if (hooks->z_max > Z_MOY || hooks->z_min < -Z_MOY)
         hooks->z_factor = 1;
-    hooks->x_factor = WIDTH / hooks->width_grid / 2;
-    hooks->y_factor = WIDTH / hooks->height_grid / 2;
+    hooks->x_factor = WIDTH / hooks->width_grid / 3;
+    hooks->y_factor = WIDTH / hooks->height_grid / 3;
     generate_map(hooks, fd);
     return (1);
 }

@@ -21,7 +21,7 @@ void    free_matrix(t_hooks *hooks)
         i++;
     }
     free(hooks->matrix);
-    hooks->matrix = NULL;
+    hooks->matrix = NULL;;
 }
 
 void    free_split(char **splitted)
@@ -39,6 +39,7 @@ void    free_split(char **splitted)
 
 void	exit_free(t_hooks *hooks)
 {
+    free(hooks->cmd);
 	free_matrix(hooks);
 	mlx_destroy_image(hooks->mlx, hooks->img.img);
 	mlx_destroy_window(hooks->mlx, hooks->win);

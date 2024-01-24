@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:15:08 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/20 22:38:28 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/24 19:12:01 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int main(int ac, char **av)
 		return (print_error("Invalid extention found, please use a .fdf file\n", 1));
 	_setup_(&hooks);
 	config_hooks(&hooks);
-	hooks.z_factor = 50;
+	hooks.z_factor = 5;
 	load_map(&hooks, av[1]);
 	hooks.mlx = mlx_init();
 	hooks.win = mlx_new_window(hooks.mlx, WIDTH, HEIGHT, WINDOW_NAME);

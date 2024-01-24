@@ -10,12 +10,14 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <math.h>
+#include <complex.h>
 #include "sets.h"
 
 void	    _setup_(t_hooks *hooks);
 void	    config_hooks(t_hooks *hooks);
 void        refresh_image(t_hooks *hooks, t_data *img);
 void        center_map(t_hooks *hooks);
+void        init_point(t_hooks *hooks, t_point *point, int row, int col);
 
 void        render_top_left(t_hooks *hooks);
 void        render_top_right(t_hooks *hooks);
@@ -45,9 +47,8 @@ int 		load_map(t_hooks *hooks, char *file);
 void 		link_point(t_hooks *hooks, int row, int col);
 void    	mark_points(t_hooks *hooks);
 
-void        cartesian(t_hooks *hooks, t_point *point);
-int         get_real_x(t_hooks *hooks, t_point *point);
-int         get_real_y(t_hooks *hooks, t_point *point);
 void        get_real_point(t_hooks *hooks, t_point *point);
+
+char        *get_char(int keycode);
 
 #endif

@@ -21,8 +21,12 @@ void    center_map(t_hooks *hooks)
     bottom.y = hooks->height_grid * hooks->y_factor;
     bottom.z = get_z(hooks->matrix[hooks->height_grid - 1][hooks->width_grid - 1],
             hooks);
-    hooks->x_offset = (WIDTH / 2);
-    hooks->y_offset = (HEIGHT / 2);
+    get_real_point(hooks, &left);
+    get_real_point(hooks, &right);
+    get_real_point(hooks, &top);
+    get_real_point(hooks, &bottom);
+    hooks->x_offset = (WIDTH / 2) - (left.x + right.x) / 2;
+    hooks->y_offset = (HEIGHT / 2) - (top.y + bottom.y) / 2;
 }
 
 int get_z(char *str, t_hooks *hooks)
@@ -64,14 +68,30 @@ int is_center_point(t_hooks *hooks, int i, int j)
 
 void    choose_render_direction(t_hooks *hooks)
 {
-    if (((int)hooks->z_angle >= 0 && (int)hooks->z_angle < 45) || ((int)hooks->z_angle > 225 && (int)hooks->z_angle < 270))
+    int  az;
+
+    az = (int)hooks->z_angle;
+    if ((az >= 0 && az < 45) || (az > 315 && az < 360) || az == 45)
         render_top_left(hooks);
-    else if (((int)hooks->z_angle >= 45 && (int)hooks->z_angle < 90) || ((int)hooks->z_angle >= 180 && (int)hooks->z_angle < 225))
+    else if ((az > 45 && az < 90))
         render_bottom_left(hooks);
-    else if ((int)hooks->z_angle >= 90 && (int)hooks->z_angle < 180)
+    else if ((az >= 90 && az < 225) || az == 225)
         render_bottom_right(hooks);
-    else if (((int)hooks->z_angle >= 270 && (int)hooks->z_angle < 360) || (int)hooks->z_angle == 225)
+    else if (az > 225 && az < 315)
         render_top_right(hooks);
+}
+
+void    get_center_point(t_hooks *hooks)
+{
+    int     dz;
+
+    hooks->center_point.x = hooks->width_grid / 2 * hooks->x_factor;
+    hooks->center_point.y = hooks->height_grid / 2 * hooks->y_factor;
+    if (hooks->z_max > hooks->z_min)
+        dz = hooks->z_max - hooks->z_min;
+    else
+        dz = hooks->z_min - hooks->z_max;
+    hooks->center_point.z = (dz / 2) * hooks->z_factor;
 }
 
 void    mark_points(t_hooks *hooks)      
@@ -81,6 +101,7 @@ void    mark_points(t_hooks *hooks)
     t_point point;
 
     choose_render_direction(hooks);
+    get_center_point(hooks);
     i = hooks->direction.i_start;
     while ((i < hooks->direction.i_end && hooks->direction.i_step == 1) ||
             (i > hooks->direction.i_end && hooks->direction.i_step == -1))
@@ -89,12 +110,7 @@ void    mark_points(t_hooks *hooks)
         while ((j < hooks->direction.j_end && hooks->direction.j_step == 1) ||
                 (j > hooks->direction.j_end && hooks->direction.j_step == -1))
         {
-            point.x = j * hooks->x_factor;
-            point.y = i * hooks->y_factor;
-            point.z = get_z(hooks->matrix[i][j], hooks);
-            point.color = get_color(hooks->matrix[i][j], hooks);
-            if (is_center_point(hooks, i, j))
-                hooks->center_point = point;
+            init_point(hooks, &point, i, j);
             get_real_point(hooks, &point);
             put_the_pixel(&hooks->img, point.x, point.y, point.color);
             if (hooks->allow_link)

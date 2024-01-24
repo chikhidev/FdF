@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:16:05 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/20 21:40:44 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/24 23:31:27 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int choose_color(t_point *p0, t_point *p1)
         return (p0->color);
     if (p1->z > p0->z)
         return (p1->color);
-    else if (p0->z > p1->z)
+    else if (p0->z >= p1->z)
         return (p0->color);
     return (WHITE_COLOR);
 }
@@ -42,7 +42,6 @@ void init_point(t_hooks *hooks, t_point *point, int row, int col)
     point->y = row * hooks->y_factor;
     point->z = get_z(hooks->matrix[row][col], hooks);
     point->color = get_color(hooks->matrix[row][col], hooks);
-    get_real_point(hooks, point);
 }
 
 void dda(t_hooks *hooks, t_point *point0, t_point *point1)
@@ -67,19 +66,23 @@ void dda(t_hooks *hooks, t_point *point0, t_point *point1)
 
 void link_point(t_hooks *hooks, int row, int col)
 {
-    t_point strt, end;
+    t_point strt;
+    t_point end;
 
     init_point(hooks, &strt, row, col);
-    if (strt.x < 0 || strt.x >= WIDTH || strt.y < 0 || strt.y >= HEIGHT)
+    get_real_point(hooks, &strt);
+    if ((strt.x < 0 || strt.x >= WIDTH) && (strt.y < 0 || strt.y >= HEIGHT))
         return;
     if ((col + 1) < hooks->width_grid)
     {
         init_point(hooks, &end, row, col + 1);
+        get_real_point(hooks, &end);
         dda(hooks, &strt, &end);
     }
     if ((row + 1) < hooks->height_grid)
     {
         init_point(hooks, &end, row + 1, col);
+        get_real_point(hooks, &end);
         dda(hooks, &strt, &end);
     }
 }

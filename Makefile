@@ -5,7 +5,7 @@ RESET = \033[0m
 
 NAME = fdf
 CFLAGS = -Wall -Wextra -Werror -Imlx 
-LDFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
+LDFLAGS = -lmlx -framework OpenGL -framework AppKit
 
 SRC = 	config.c \
 		draw.c \
@@ -16,11 +16,11 @@ SRC = 	config.c \
       	read.c \
 		free_exit.c \
       	error.c \
-		views.c \
 		rendering_sides.c \
+		input.c \
 	  	main.c \
 	  	events_listener.c \
-	  	events/conf.c events/moving.c events/renderer.c events/rotation.c
+	  	events/conf.c events/moving.c events/renderer.c events/rotation.c events/cmd.c
 
 OBJ = $(SRC:.c=.o)
 GNL = get_next_line.o
