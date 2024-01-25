@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/25 13:48:14 by abchikhi          #+#    #+#             */
+/*   Updated: 2024/01/25 13:50:21 by abchikhi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./includes/header.h"
 
 void	check_validity(t_hooks *hooks, char **arr, int i)
@@ -5,13 +17,15 @@ void	check_validity(t_hooks *hooks, char **arr, int i)
 	if (!char_is_degits(&arr[i][0]))
 	{
 		ft_printf("Error: Invalid syntax, line %d, col %d\n",
-			hooks->height_grid + 1, i + 1);
+			hooks->height_grid + 1,
+			i + 1);
 		exit(1);
 	}
 	if (is_overflowed_int(arr[i]))
 	{
 		ft_printf("Error: Found an overflow, line: %d, col %d\n",
-			hooks->height_grid + 1, i + 1);
+			hooks->height_grid + 1,
+			i + 1);
 		exit(1);
 	}
 }
@@ -33,8 +47,10 @@ int	cols_count(char **arr, t_hooks *hooks)
 		}
 		else
 		{
-			z_value > hooks->z_max ? hooks->z_max = z_value : 0;
-			z_value < hooks->z_min ? hooks->z_min = z_value : 0;
+			if (z_value > hooks->z_max)
+				hooks->z_max = z_value;
+			if (z_value < hooks->z_min)
+				hooks->z_min = z_value;
 		}
 		i++;
 	}
@@ -43,9 +59,9 @@ int	cols_count(char **arr, t_hooks *hooks)
 
 int	atoi_base(char *str, int base)
 {
-	int		i;
-	int		nbr;
-	int		sign;
+	int	i;
+	int	nbr;
+	int	sign;
 
 	i = 0;
 	nbr = 0;
@@ -69,7 +85,7 @@ int	atoi_base(char *str, int base)
 	return (nbr * sign);
 }
 
-int	valid_extention(char	*name)
+int	valid_extention(char *name)
 {
 	char	*extention;
 
@@ -77,4 +93,9 @@ int	valid_extention(char	*name)
 	if (!extention)
 		print_error("No extention found\n", 1);
 	return (ft_strncmp(extention, ".fdf", 4) == 0);
+}
+
+int	get_z(char *str, t_hooks *hooks)
+{
+	return (ft_atoi(str) * hooks->z_factor);
 }

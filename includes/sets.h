@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sets.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/25 13:02:15 by abchikhi          #+#    #+#             */
+/*   Updated: 2024/01/25 13:11:32 by abchikhi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SETS_H
 # define SETS_H
 
@@ -20,36 +32,36 @@
 
 typedef struct s_data
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_data;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_data;
 
 typedef struct s_point
 {
-    int	x;
-    int	y;
-    int	z;
-    int color;
-}	t_point;
+	int			x;
+	int			y;
+	int			z;
+	int			color;
+}				t_point;
 
 typedef struct direction
 {
-    int i_start;
-    int i_end;
-    int i_step;
-    int j_start;
-    int j_end;
-    int j_step;
-}   t_direction;
+	int			i_start;
+	int			i_end;
+	int			i_step;
+	int			j_start;
+	int			j_end;
+	int			j_step;
+}				t_direction;
 
 typedef struct s_alphabet
 {
-	int		code;
-	char	*content;
-}   t_alphabet;
+	int			code;
+	char		*content;
+}				t_alphabet;
 
 typedef struct s_hooks
 {
@@ -71,19 +83,29 @@ typedef struct s_hooks
 	double		y_factor;
 	double		scale;
 	double		facing_angle;
-	double 		x_offset;
-	double 		y_offset;
+	double		x_offset;
+	double		y_offset;
 	int			allow_link;
 	double		move_step;
 	int			most_left_x;
 	int			most_right_x;
 	int			most_top_y;
-	int			most_bottom_y; 
+	int			most_bottom_y;
 	double		z_angle;
 	int			parallel_view;
 	int			cmd_mode;
 	char		*cmd;
-}	t_hooks;
+}				t_hooks;
+
+typedef struct s_drawer
+{
+	int			steps;
+	double		x_inc;
+	double		y_inc;
+	double		x;
+	double		y;
+	double		i;
+}				t_drawer;
 
 enum
 {

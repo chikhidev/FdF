@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_num.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abchikhi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 02:08:33 by abchikhi          #+#    #+#             */
-/*   Updated: 2023/11/20 02:08:34 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:55:56 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void	ft_putnbr_un_rec(unsigned int n, int *len)
 
 int	ft_print_dig(int digit)
 {
-	int	len;
-	long n;
+	int		len;
+	long	n;
 
 	n = (long)digit;
 	len = 0;

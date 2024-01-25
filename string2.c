@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/25 13:59:20 by abchikhi          #+#    #+#             */
+/*   Updated: 2024/01/25 13:59:21 by abchikhi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./includes/header.h"
 
-int is_overflowed_int(char *str)
+int	is_overflowed_int(char *str)
 {
 	int		res;
 	char	*num;
@@ -45,7 +57,8 @@ void	guide_helper(t_hooks *hooks, int *logo_width, int *logo_height)
 	if (HEIGHT < 230 || WIDTH < 350)
 		return ;
 	data = ft_itoa(hooks->width_grid * hooks->height_grid);
-	mlx_string_put(hooks->mlx, hooks->win, 15, 10, WHITE_COLOR, "Points rendered: ");
+	mlx_string_put(hooks->mlx, hooks->win, 15, 10, WHITE_COLOR,
+		"Points rendered: ");
 	mlx_string_put(hooks->mlx, hooks->win, 200, 10, WHITE_COLOR, data);
 	free(data);
 	data = ft_itoa(hooks->scale);
@@ -56,10 +69,42 @@ void	guide_helper(t_hooks *hooks, int *logo_width, int *logo_height)
 	mlx_string_put(hooks->mlx, hooks->win, 15, 50, WHITE_COLOR, "Z factor: ");
 	mlx_string_put(hooks->mlx, hooks->win, 200, 50, WHITE_COLOR, data);
 	free(data);
-	hooks->logo = mlx_xpm_file_to_image(hooks->mlx, "./imgs/logo.xpm", logo_width, logo_height);
-	mlx_put_image_to_window(hooks->mlx, hooks->win, hooks->logo, WIDTH - 115, -10);
+	hooks->logo = mlx_xpm_file_to_image(hooks->mlx, "./imgs/logo.xpm",
+			logo_width, logo_height);
+	mlx_put_image_to_window(hooks->mlx, hooks->win, hooks->logo, WIDTH - 115,
+		-10);
 	mlx_string_put(hooks->mlx, hooks->win, 15, 70, WHITE_COLOR, "Zoom: z/x");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 90, WHITE_COLOR, "Reset: r");
+	mlx_string_put(hooks->mlx, hooks->win, 15, 110, WHITE_COLOR,
+		"Toggle linking: l");
+}
+
+void	guide_helper2(t_hooks *hooks)
+{
+	char	*toggle;
+	int		color;
+
+	toggle = "off";
+	if (hooks->allow_link)
+		toggle = "on";
+	color = RED_COLOR;
+	if (hooks->allow_link)
+		color = GREEN_COLOR;
+	mlx_string_put(hooks->mlx, hooks->win, 200, 110, color, toggle);
+	toggle = "off";
+	if (hooks->parallel_view)
+		toggle = "on";
+	color = RED_COLOR;
+	if (hooks->parallel_view)
+		color = GREEN_COLOR;
+	mlx_string_put(hooks->mlx, hooks->win, 200, 130, color, toggle);
+	toggle = "off";
+	if (hooks->parallel_view)
+		toggle = "on";
+	color = RED_COLOR;
+	if (hooks->parallel_view)
+		color = GREEN_COLOR;
+	mlx_string_put(hooks->mlx, hooks->win, 200, 190, color, toggle);
 }
 
 void	show_guide(t_hooks *hooks)
@@ -71,14 +116,15 @@ void	show_guide(t_hooks *hooks)
 	logo_height = 100;
 	logo_width = 100;
 	guide_helper(hooks, &logo_width, &logo_height);
-	mlx_string_put(hooks->mlx, hooks->win, 15, 110, WHITE_COLOR, "Toggle linking: l");
-	mlx_string_put(hooks->mlx, hooks->win, 200, 110, !hooks->allow_link ? RED_COLOR : GREEN_COLOR, !hooks->allow_link ? "off" : "on");
-	mlx_string_put(hooks->mlx, hooks->win, 15, 130, WHITE_COLOR, "Top view(2D): f");
-	mlx_string_put(hooks->mlx, hooks->win, 200, 130, !hooks->parallel_view ? RED_COLOR : GREEN_COLOR, !hooks->parallel_view ? "off" : "on");
-	mlx_string_put(hooks->mlx, hooks->win, 15, 150, WHITE_COLOR, "Z scaling: j/k");
-	mlx_string_put(hooks->mlx, hooks->win, 15, 170, WHITE_COLOR, "Z rotation: a/d");
-	mlx_string_put(hooks->mlx, hooks->win, 15, 190, WHITE_COLOR, "Command line: c");
-	mlx_string_put(hooks->mlx, hooks->win, 200, 190, !hooks->cmd_mode ? RED_COLOR : GREEN_COLOR, !hooks->cmd_mode ? "off" : "on");
+	guide_helper2(hooks);
+	mlx_string_put(hooks->mlx, hooks->win, 15, 150, WHITE_COLOR,
+		"Z scaling: j/k");
+	mlx_string_put(hooks->mlx, hooks->win, 15, 170, WHITE_COLOR,
+		"Z rotation: a/d");
+	mlx_string_put(hooks->mlx, hooks->win, 15, 190, WHITE_COLOR,
+		"Command line: c");
+	mlx_string_put(hooks->mlx, hooks->win, 15, 130, WHITE_COLOR,
+		"Top view(2D): f");
 	data = ft_itoa(hooks->z_angle);
 	mlx_string_put(hooks->mlx, hooks->win, 15, 210, WHITE_COLOR, "Z angle: ");
 	mlx_string_put(hooks->mlx, hooks->win, 200, 210, WHITE_COLOR, data);

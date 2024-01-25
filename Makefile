@@ -14,7 +14,6 @@ SRC = 	config.c \
       	geo.c \
       	cartesian.c \
       	read.c \
-		free_exit.c \
       	error.c \
 		rendering_sides.c \
 		input.c \
