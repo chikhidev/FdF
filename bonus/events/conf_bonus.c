@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 13:00:26 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/26 18:05:56 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/26 22:34:45 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	reset(t_hooks *hooks)
 	hooks->cmd = ft_strdup("");
 	config_hooks(hooks);
 	center_map(hooks);
-	hooks->z_factor = 5;
 	if (hooks->z_max > Z_MOY || hooks->z_min < -Z_MOY)
 		hooks->z_factor = 1;
 }

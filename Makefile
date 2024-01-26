@@ -4,7 +4,7 @@ RED = \033[0;31m
 RESET = \033[0m
 
 NAME = fdf
-CFLAGS = -Wall -Wextra -Werror -Imlx #-O2
+CFLAGS = -Wall -Wextra -Werror -Imlx -O2
 LDFLAGS = -lmlx -framework OpenGL -framework AppKit
 
 BSRC = 	bonus/config_bonus.c \

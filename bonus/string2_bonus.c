@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 13:59:20 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/26 15:58:47 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/26 22:46:12 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,10 @@ void	guide_helper2(t_hooks *hooks)
 		color = GREEN_COLOR;
 	mlx_string_put(hooks->mlx, hooks->win, 200, 130, color, toggle);
 	toggle = "off";
-	if (hooks->parallel_view)
+	if (hooks->cmd_mode)
 		toggle = "on";
 	color = RED_COLOR;
-	if (hooks->parallel_view)
+	if (hooks->cmd_mode)
 		color = GREEN_COLOR;
 	mlx_string_put(hooks->mlx, hooks->win, 200, 190, color, toggle);
 }
@@ -122,7 +122,7 @@ void	show_guide(t_hooks *hooks)
 	mlx_string_put(hooks->mlx, hooks->win, 15, 170, WHITE_COLOR,
 		"Z rotation: a/d");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 190, WHITE_COLOR,
-		"Command line: c");
+		"Command line: t");
 	mlx_string_put(hooks->mlx, hooks->win, 15, 130, WHITE_COLOR,
 		"Top view(2D): f");
 	data = ft_itoa(hooks->z_angle);
