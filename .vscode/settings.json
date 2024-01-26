@@ -4,6 +4,7 @@
         "get_next_line.h": "c",
         "ft_printf.h": "c",
         "events.h": "c",
-        "system_error": "c"
+        "system_error": "c",
+        "mlx.h": "c"
     }
 }
