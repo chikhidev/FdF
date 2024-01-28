@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 09:58:54 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/26 16:32:33 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/28 00:40:20 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	process_line(t_hooks *hooks, int fd)
 	{
 		ft_printf("Map grid error at line %d\n", hooks->height_grid + 1);
 		ft_printf("Expected %d columns, got %d\n", hooks->width_grid,
-				temp_cols);
+			temp_cols);
 		exit(1);
 	}
 	hooks->width_grid = temp_cols;
@@ -66,7 +66,7 @@ void	generate_map(t_hooks *hooks, int fd)
 		print_error("matrix not allocated (memory problems)\n", 1);
 	i = 0;
 	ft_printf("Generating %d points...\n", hooks->width_grid
-			* hooks->height_grid);
+		* hooks->height_grid);
 	line = get_next_line(fd);
 	while (line)
 	{

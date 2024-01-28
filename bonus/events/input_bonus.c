@@ -6,11 +6,11 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 13:33:32 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/26 15:58:32 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:58:29 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/header_bonus.h"
+#include "../includes/header_bonus.h"
 
 void	fill_alphabet(t_alphabet *reps, char *content, int code)
 {

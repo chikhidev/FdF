@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 13:00:26 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/26 22:34:45 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/28 00:29:00 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	update_limit(double *ptr, double limit, double value)
 void	reset(t_hooks *hooks)
 {
 	free(hooks->cmd);
-	hooks->cmd = ft_strdup("");
 	config_hooks(hooks);
 	center_map(hooks);
 	if (hooks->z_max > Z_MOY || hooks->z_min < -Z_MOY)

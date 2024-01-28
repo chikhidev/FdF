@@ -4,7 +4,7 @@ RED = \033[0;31m
 RESET = \033[0m
 
 NAME = fdf
-CFLAGS = -Wall -Wextra -Werror -Imlx -O2
+CFLAGS = -Wall -Wextra -Werror -Imlx #-O2
 LDFLAGS = -lmlx -framework OpenGL -framework AppKit
 
 BSRC = 	bonus/config_bonus.c \
@@ -16,9 +16,9 @@ BSRC = 	bonus/config_bonus.c \
       	bonus/read_bonus.c \
       	bonus/error_bonus.c \
 		bonus/rendering_sides_bonus.c \
-		bonus/input_bonus.c \
 	  	bonus/main_bonus.c \
 	  	bonus/events_listener_bonus.c \
+		bonus/events/input_bonus.c \
 	  	bonus/events/conf_bonus.c \
 		bonus/events/moving_bonus.c \
 		bonus/events/renderer_bonus.c \
@@ -83,6 +83,6 @@ fclean: clean
 	@echo "$(RED)Removing executable 😢$(RESET)"
 	@rm -f $(NAME) $(NAME)_bonus
 
-build: all clean
+build: all bonus clean
 
 re: clean all

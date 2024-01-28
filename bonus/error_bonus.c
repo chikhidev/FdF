@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 13:16:43 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/26 15:58:11 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:04:02 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	destroy(int keycode, t_hooks *hooks)
 	(void)keycode;
 	(void)hooks;
 	ft_printf("Bye\n");
+	system("leaks fdf");
 	exit(0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 13:02:15 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/26 22:29:52 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/28 00:03:16 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ typedef struct s_hooks
 	t_data		img;
 	void		*mlx;
 	void		*win;
+	int			win_width;
+	int			win_height;
 	char		***matrix;
 	char		**arr;
 	void		*logo;
@@ -96,6 +98,14 @@ typedef struct s_hooks
 	int			cmd_mode;
 	char		*cmd;
 }				t_hooks;
+
+typedef struct s_map_edges
+{
+	t_point		left;
+	t_point		right;
+	t_point		top;
+	t_point		bottom;
+}				t_map_edges;
 
 typedef struct s_drawer
 {

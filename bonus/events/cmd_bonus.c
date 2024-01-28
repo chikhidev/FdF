@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 13:00:07 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/26 22:05:37 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/28 00:38:04 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	helper_cmd(t_hooks *hooks, int len)
 {
-	ft_printf("entered helper\n");
 	if (ft_strncmp(hooks->cmd, "zoomout", 7) == 0 && len == 7
 		&& hooks->scale > .3)
 		hooks->scale -= .2;
@@ -47,7 +46,6 @@ void	execute_cmd(t_hooks *hooks)
 	if (!hooks->cmd_mode)
 		return ;
 	len = (int)ft_strlen(hooks->cmd);
-	ft_printf("len = %d\n", len);
 	if (ft_strncmp(hooks->cmd, "exit", 4) == 0 && len == 4)
 		exit_free(hooks);
 	else if (ft_strncmp(hooks->cmd, "parallel", 8) == 0 && len == 8)

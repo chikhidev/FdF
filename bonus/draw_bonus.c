@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:16:05 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/26 15:58:09 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/28 01:24:58 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,15 @@ void	put_the_pixel(t_data *img, int x, int y, int color)
 
 int	choose_color(t_point *p0, t_point *p1)
 {
-	if (p0->color == p1->color)
-		return (p0->color);
-	if (p1->z > p0->z)
+	if (p1->z > p0->z && p1->z > 0)
 		return (p1->color);
-	else if (p0->z >= p1->z)
+	else if (p0->z > p1->z && p0->z > 0)
 		return (p0->color);
-	return (WHITE_COLOR);
+	else if (p1->z < p0->z && p1->z < 0)
+		return (p1->color);
+	else if (p0->z < p1->z && p0->z < 0)
+		return (p0->color);
+	return (p0->color);
 }
 
 void	dda(t_hooks *hooks, t_point *point0, t_point *point1)

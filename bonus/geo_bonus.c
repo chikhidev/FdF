@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   geo__bonus.c                                       :+:      :+:    :+:   */
+/*   geo_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 13:28:58 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/26 15:58:26 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/28 00:28:12 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,27 @@
 
 void	center_map(t_hooks *hooks)
 {
-	t_point	left;
-	t_point	right;
-	t_point	top;
-	t_point	bottom;
+	t_map_edges	edges;
 
-	left.x = 0;
-	left.y = hooks->height_grid * hooks->y_factor;
-	left.z = get_z(hooks->matrix[hooks->height_grid - 1][0], hooks);
-	right.x = hooks->width_grid * hooks->x_factor;
-	right.y = 0;
-	right.z = get_z(hooks->matrix[0][hooks->width_grid - 1], hooks);
-	top.x = 0;
-	top.y = 0;
-	top.z = get_z(hooks->matrix[0][0], hooks);
-	bottom.x = hooks->width_grid * hooks->x_factor;
-	bottom.y = hooks->height_grid * hooks->y_factor;
-	bottom.z = get_z(hooks->matrix[hooks->height_grid - 1][hooks->width_grid
-			- 1], hooks);
-	get_real_point(hooks, &left);
-	get_real_point(hooks, &right);
-	get_real_point(hooks, &top);
-	get_real_point(hooks, &bottom);
-	hooks->x_offset = (WIDTH / 2) - (left.x + right.x) / 2;
-	hooks->y_offset = (HEIGHT / 2) - (top.y + bottom.y) / 2;
+	edges.left.x = 0;
+	edges.left.y = hooks->height_grid * hooks->y_factor;
+	edges.left.z = get_z(hooks->matrix[hooks->height_grid - 1][0], hooks);
+	edges.right.x = hooks->width_grid * hooks->x_factor;
+	edges.right.y = 0;
+	edges.right.z = get_z(hooks->matrix[0][hooks->width_grid - 1], hooks);
+	edges.top.x = 0;
+	edges.top.y = 0;
+	edges.top.z = get_z(hooks->matrix[0][0], hooks);
+	edges.bottom.x = hooks->width_grid * hooks->x_factor;
+	edges.bottom.y = hooks->height_grid * hooks->y_factor;
+	edges.bottom.z = get_z(hooks->matrix[hooks->height_grid
+			- 1][hooks->width_grid - 1], hooks);
+	get_real_point(hooks, &edges.left);
+	get_real_point(hooks, &edges.right);
+	get_real_point(hooks, &edges.top);
+	get_real_point(hooks, &edges.bottom);
+	hooks->x_offset = (WIDTH / 2) - (edges.left.x + edges.right.x) / 2;
+	hooks->y_offset = (HEIGHT / 2) - (edges.top.y + edges.bottom.y) / 2;
 }
 
 int	is_center_point(t_hooks *hooks, int i, int j)

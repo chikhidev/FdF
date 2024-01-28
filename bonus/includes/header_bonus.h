@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 13:01:49 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/26 22:12:23 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/28 00:28:54 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	refresh_image(t_hooks *hooks, t_data *img);
 void	center_map(t_hooks *hooks);
 void	init_point(t_hooks *hooks, t_point *point, int row, int col);
 
+void	choose_render_direction(t_hooks *hooks);
 void	render_top_left(t_hooks *hooks);
 void	render_top_right(t_hooks *hooks);
 void	render_bottom_left(t_hooks *hooks);

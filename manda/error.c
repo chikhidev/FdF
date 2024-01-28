@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 13:16:43 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/26 16:15:30 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/27 15:43:56 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	exit_free(t_hooks *hooks)
 	free_matrix(hooks);
 	mlx_destroy_image(hooks->mlx, hooks->img.img);
 	mlx_destroy_window(hooks->mlx, hooks->win);
-	system("leaks fdf");
 	exit(0);
 }
 

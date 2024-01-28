@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:15:08 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/01/26 22:19:05 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/01/28 00:30:45 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	main(int ac, char **av)
 	hooks.z_factor = 30;
 	load_map(&hooks, av[1]);
 	hooks.mlx = mlx_init();
-	hooks.win = mlx_new_window(hooks.mlx, WIDTH, HEIGHT, WINDOW_NAME);
 	refresh_image(&hooks, &img);
 	center_map(&hooks);
+	hooks.win = mlx_new_window(hooks.mlx, WIDTH, HEIGHT, WINDOW_NAME);
 	mark_points(&hooks);
 	mlx_put_image_to_window(hooks.mlx, hooks.win, img.img, 0, 0);
 	mlx_hook(hooks.win, ON_DESTROY, 0, destroy, &hooks);
